@@ -25,8 +25,11 @@ class AuthViewModel: ObservableObject {
                 self.session = User(
                     uid: user.uid,
                     displayName: user.displayName,
-                    email: user.email
+                    email: user.email,
+                    photoURL: user.photoURL
                 )
+                
+                print(user.photoURL)
             } else {
                 // If we don't have a user, set our session to nil
                 self.session = nil
@@ -85,11 +88,13 @@ class User {
     var uid: String
     var email: String?
     var displayName: String?
+    var photoURL: URL?
     
-    init(uid: String, displayName: String?, email: String?) {
+    init(uid: String, displayName: String?, email: String?, photoURL: URL?) {
         self.uid = uid
         self.email = email
         self.displayName = displayName
+        self.photoURL = photoURL
     }
 }
 

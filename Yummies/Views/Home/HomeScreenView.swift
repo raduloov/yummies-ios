@@ -14,11 +14,24 @@ struct HomeScreenView: View {
     
     var body: some View {
         
-        Button(action: {
-            authVM.singOut()
-        }) {
-            Text("Sign out")
+        ZStack {
+            LinearGradient(colors: [Color("gradient1"), Color("gradient2")], startPoint: .bottom, endPoint: .top)
+                .edgesIgnoringSafeArea(.all)
+            
+            VStack {
+                HomeHeader()
+                
+                Spacer()
+                
+                Button(action: {
+                    authVM.singOut()
+                }) {
+                    Text("Sign out")
+                }
+            }
+            
         }
+        
 
     }
 }
