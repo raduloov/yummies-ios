@@ -28,8 +28,6 @@ class AuthViewModel: ObservableObject {
                     email: user.email,
                     photoURL: user.photoURL
                 )
-                
-                print(user.photoURL)
             } else {
                 // If we don't have a user, set our session to nil
                 self.session = nil

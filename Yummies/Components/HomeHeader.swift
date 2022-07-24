@@ -17,15 +17,20 @@ struct HomeHeader: View {
             TextField("Search for a recipe", text: $text)
                 .textFieldStyle(GradientTextFieldBackground())
             
-            AsyncImage(url: authVM.session?.photoURL) { image in
-                image
-                    .resizable()
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
-            } placeholder: {
-                ProgressView()
-            }
-            .frame(width: 40, height: 40)
+            NavigationLink(destination: ProfileView()
+                .environmentObject(authVM)
+                .navigationTitle("Profile"), label: {
+                    AsyncImage(url: authVM.session?.photoURL) { image in
+                        image
+                            .resizable()
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    } placeholder: {
+                        Image(systemName: "person")
+                            .foregroundColor(Color.black)
+                    }
+                    .frame(width: 40, height: 40)
+                })
         }
         .frame(height: 40)
         .padding()
