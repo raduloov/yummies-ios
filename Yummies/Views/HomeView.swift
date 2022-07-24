@@ -11,7 +11,7 @@ import FirebaseAuth
 struct HomeScreenView: View {
     
     @EnvironmentObject var authVM: AuthViewModel
-    @StateObject var homeVM = HomeScreenViewModel()
+    @StateObject private var homeVM = HomeViewModel()
     
     var body: some View {
         ZStack {
@@ -22,7 +22,7 @@ struct HomeScreenView: View {
                 HomeHeader()
                 
                 ScrollView {
-                    if homeVM.isRefreshing {
+                    if homeVM.recipes.count != categories.count {
                         VStack {
                             LoadingIndicator(text: "Getting recipes...", size: 2)
                         }
@@ -30,21 +30,20 @@ struct HomeScreenView: View {
                     } else {
                         VStack(alignment: .leading) {
                             ForEach(0 ..< categories.count, id: \.self) { index in
-                                Text(categories[index].title)
-                                    .font(.system(.title, design: .rounded))
-                                    .fontWeight(.heavy)
-                                    .padding(.horizontal)
-                                ScrollView(.horizontal, showsIndicators: false) {
-                                    HStack {
-                                        ForEach(homeVM.recipes) { recipe in
-                                            RoundedRectangle(cornerRadius: 25)
-                                                .fill(Color.white)
-                                                .frame(width: 200, height: 150)
-                                                .shadow(radius: 5, x: 0, y: 5)
-                                                .padding()
-                                                .overlay(
-                                                    Text(recipe.recipe.label)
+                                
+                                Group {
+                                    Text(categories[index].title)
+                                        .font(.system(.title, design: .rounded))
+                                        .fontWeight(.heavy)
+                                        .padding(.horizontal)
+                                    ScrollView(.horizontal, showsIndicators: false) {
+                                        HStack {
+                                            ForEach(homeVM.recipes[index]) { recipe in
+                                                MealCard(
+                                                    imageUrl: recipe.recipe.image,
+                                                    label: recipe.recipe.label
                                                 )
+                                            }
                                         }
                                     }
                                 }
@@ -56,6 +55,9 @@ struct HomeScreenView: View {
         }
         .navigationTitle("Home")
         .navigationBarHidden(true)
+        .task {
+            await homeVM.populateCategories()
+        }
     }
 }
 
