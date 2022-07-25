@@ -16,5 +16,6 @@ let categories: [Category] = [
     Category(title: "🍔 Burgers", query: "burger"),
     Category(title: "🍕 Pizza", query: "pizza"),
     Category(title: "🍣 Sushi", query: "sushi"),
+    Category(title: "🐉 Chinese", query: "chinese"),
     Category(title: "🍰 Dessert", query: "dessert")
 ]

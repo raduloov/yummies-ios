@@ -15,7 +15,7 @@ struct HomeScreenView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color("gradient1"), Color("gradient2")], startPoint: .bottom, endPoint: .top)
+            LinearGradient(colors: [Color("bgGradient1"), Color("bgGradient2")], startPoint: .bottom, endPoint: .top)
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -27,6 +27,7 @@ struct HomeScreenView: View {
                             LoadingIndicator(text: "Getting recipes...", size: 2)
                         }
                         .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height / 2)
+                    
                     } else {
                         VStack(alignment: .leading) {
                             ForEach(0 ..< categories.count, id: \.self) { index in
@@ -37,11 +38,13 @@ struct HomeScreenView: View {
                                         .fontWeight(.heavy)
                                         .padding(.horizontal)
                                     ScrollView(.horizontal, showsIndicators: false) {
-                                        HStack {
+                                        HStack(alignment: .top) {
                                             ForEach(homeVM.recipes[index]) { recipe in
                                                 MealCard(
+                                                    uri: recipe.recipe.uri,
                                                     imageUrl: recipe.recipe.image,
-                                                    label: recipe.recipe.label
+                                                    label: recipe.recipe.label,
+                                                    nutrients: recipe.recipe.totalNutrients
                                                 )
                                             }
                                         }
@@ -56,7 +59,9 @@ struct HomeScreenView: View {
         .navigationTitle("Home")
         .navigationBarHidden(true)
         .task {
-            await homeVM.populateCategories()
+            if homeVM.recipes.count < categories.count {
+                await homeVM.populateCategories()
+            }
         }
     }
 }

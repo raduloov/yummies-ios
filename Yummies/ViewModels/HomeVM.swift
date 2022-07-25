@@ -10,7 +10,7 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
-    @Published var recipes: [[Results]] = []
+    @Published var recipes: [[Result]] = []
     
     func populateCategories() async {
         
