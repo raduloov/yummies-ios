@@ -10,12 +10,23 @@ import SwiftUI
 struct HomeHeader: View {
     
     @EnvironmentObject var authVM: AuthViewModel
+    @Binding var showCategoriesSheet: Bool
     @State private var text: String = ""
     
     var body: some View {
         HStack {
             TextField("Search for a recipe", text: $text)
                 .textFieldStyle(GradientTextFieldBackground())
+            
+            Button(action: {
+                showCategoriesSheet.toggle()
+            }) {
+                Image(systemName: "line.3.horizontal.decrease.circle.fill")
+                    .resizable()
+                    .foregroundColor(Color.black.opacity(0.75))
+                    .frame(width: 35, height: 35)
+                    .overlay(Circle().stroke(Color.white, lineWidth: 2))
+            }
             
             NavigationLink(destination: ProfileView()
                 .environmentObject(authVM)
@@ -27,9 +38,11 @@ struct HomeHeader: View {
                             .overlay(Circle().stroke(Color.white, lineWidth: 2))
                     } placeholder: {
                         Image(systemName: "person")
-                            .foregroundColor(Color.black)
+                            .resizable()
+                            .foregroundColor(Color.black.opacity(0.75))
+                            .frame(width: 35, height: 35)
                     }
-                    .frame(width: 40, height: 40)
+                    .frame(width: 35, height: 35)
                 })
         }
         .frame(height: 40)
@@ -58,7 +71,7 @@ struct GradientTextFieldBackground: TextFieldStyle {
 
 struct HomeHeader_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeader()
+        HomeHeader(showCategoriesSheet: .constant(false))
             .environmentObject(AuthViewModel())
     }
 }

@@ -35,6 +35,8 @@
 		DB943D36288AD2E90035ECD5 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D35288AD2E90035ECD5 /* FirebaseFirestoreCombine-Community */; };
 		DB943D38288AD2E90035ECD5 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D37288AD2E90035ECD5 /* FirebaseFirestoreSwift */; };
 		DB943D3A288AD2E90035ECD5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D39288AD2E90035ECD5 /* FirebaseStorage */; };
+		DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */; };
+		DBC23F83288F40220057CD20 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = DBC23F82288F40220057CD20 /* HalfASheet */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -60,6 +62,7 @@
 		DB9198DA288AB21F00E66A64 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DB943D2C288AD18B0035ECD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB943D3B288AD4860035ECD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +75,7 @@
 				DB943D32288AD2E90035ECD5 /* FirebaseDatabase in Frameworks */,
 				DB943D36288AD2E90035ECD5 /* FirebaseFirestoreCombine-Community in Frameworks */,
 				DB943D30288AD2E90035ECD5 /* FirebaseAuth in Frameworks */,
+				DBC23F83288F40220057CD20 /* HalfASheet in Frameworks */,
 				DB943D34288AD2E90035ECD5 /* FirebaseFirestore in Frameworks */,
 				DB943D3A288AD2E90035ECD5 /* FirebaseStorage in Frameworks */,
 				DB2499DF288BECD000B35BDE /* GoogleSignIn in Frameworks */,
@@ -168,6 +172,7 @@
 				DB2499E8288BFCAA00B35BDE /* HomeView.swift */,
 				DB2499FE288D76A700B35BDE /* ProfileView.swift */,
 				DB249A04288ECE3E00B35BDE /* RecipeDetailsView.swift */,
+				DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				DB943D39288AD2E90035ECD5 /* FirebaseStorage */,
 				DB2499DE288BECD000B35BDE /* GoogleSignIn */,
 				DB2499EB288C104400B35BDE /* FirebaseService */,
+				DBC23F82288F40220057CD20 /* HalfASheet */,
 			);
 			productName = Yummies;
 			productReference = DB9198D0288AB21C00E66A64 /* Yummies.app */;
@@ -239,6 +245,7 @@
 				DB943D2E288AD2E90035ECD5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				DB2499DD288BECD000B35BDE /* XCRemoteSwiftPackageReference "GoogleSignin-iOS" */,
 				DB2499EA288C104400B35BDE /* XCRemoteSwiftPackageReference "FIrebaseService" */,
+				DBC23F81288F40220057CD20 /* XCRemoteSwiftPackageReference "HalfASheet" */,
 			);
 			productRefGroup = DB9198D1288AB21C00E66A64 /* Products */;
 			projectDirPath = "";
@@ -279,6 +286,7 @@
 				DB2499EF288C4FD900B35BDE /* HomeHeader.swift in Sources */,
 				DB2499E1288BEDC700B35BDE /* AuthVM.swift in Sources */,
 				DB249A05288ECE3E00B35BDE /* RecipeDetailsView.swift in Sources */,
+				DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */,
 				DB2499F1288C72AB00B35BDE /* FetchData.swift in Sources */,
 				DB249A07288ED32800B35BDE /* NutrientStickers.swift in Sources */,
 				DB2499E6288BFA7900B35BDE /* AuthView.swift in Sources */,
@@ -412,7 +420,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Yummies/Preview Content\"";
-				DEVELOPMENT_TEAM = 8XJ37X936X;
+				DEVELOPMENT_TEAM = BB4F34LK44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yummies/Info.plist;
@@ -421,6 +429,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -442,7 +451,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Yummies/Preview Content\"";
-				DEVELOPMENT_TEAM = 8XJ37X936X;
+				DEVELOPMENT_TEAM = BB4F34LK44;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Yummies/Info.plist;
@@ -451,6 +460,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -512,6 +522,14 @@
 				minimumVersion = 9.0.0;
 			};
 		};
+		DBC23F81288F40220057CD20 /* XCRemoteSwiftPackageReference "HalfASheet" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/franklynw/HalfASheet";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -554,6 +572,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = DB943D2E288AD2E90035ECD5 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseStorage;
+		};
+		DBC23F82288F40220057CD20 /* HalfASheet */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = DBC23F81288F40220057CD20 /* XCRemoteSwiftPackageReference "HalfASheet" */;
+			productName = HalfASheet;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

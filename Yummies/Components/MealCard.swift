@@ -57,7 +57,8 @@ struct MealCard: View {
                 )
             }
         }
-        .padding()
+        .padding(.horizontal)
+        .padding(.bottom)
     }
 }
 
