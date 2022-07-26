@@ -13,8 +13,13 @@ class HomeViewModel: ObservableObject {
     @Published var featuredRecipes: [[Result]] = []
     @Published var selectedCategoryRecipes: [Result] = []
     @Published var recipesLoaded: Bool = false
+    @Published var fetchingError: Bool = false
     
     func populateFeaturedCategories() async {
+        
+        DispatchQueue.main.async {
+            self.fetchingError = false
+        }
         
         for category in featured {
             do {
@@ -26,6 +31,9 @@ class HomeViewModel: ObservableObject {
                     self.featuredRecipes.append(recipesResponse.hits)
                 }
             } catch {
+                DispatchQueue.main.async {
+                    self.fetchingError = true
+                }
                 print(error)
             }
         }
@@ -33,7 +41,10 @@ class HomeViewModel: ObservableObject {
     
     func populateSelectedCategory(query: String) async {
         
-        self.recipesLoaded = false
+        DispatchQueue.main.async {
+            self.recipesLoaded = false
+            self.fetchingError = false
+        }
         
         do {
             let recipesResponse = try await FetchData().get(url: K.URLs.recipesByName(query)) { data in
@@ -45,6 +56,9 @@ class HomeViewModel: ObservableObject {
                 self.recipesLoaded = true
             }
         } catch {
+            DispatchQueue.main.async {
+                self.fetchingError = true
+            }
             print(error)
         }
     }

@@ -30,7 +30,9 @@ struct HomeScreenView: View {
                         .padding(.bottom, 20)
                     
                     if currentCategoryType == CategoryType.featured {
-                        if homeVM.featuredRecipes.count != featured.count {
+                        if homeVM.fetchingError {
+                            ErrorCard()
+                        } else if homeVM.featuredRecipes.count != featured.count {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -61,14 +63,14 @@ struct HomeScreenView: View {
                                     }
                                 }
                             }
-                            Text("@2022 Yavor Radulov")
-                                .font(.system(.caption, design: .rounded))
                         }
                     }
                     
                     if currentCategoryType == CategoryType.specific {
                         ScrollView {
-                            if !homeVM.recipesLoaded {
+                            if homeVM.fetchingError {
+                                ErrorCard()
+                            } else if !homeVM.recipesLoaded {
                                 VStack {
                                     LoadingIndicator(text: "Getting recipes...", size: 2)
                                 }
@@ -93,20 +95,11 @@ struct HomeScreenView: View {
         .navigationTitle("Home")
         .navigationBarHidden(true)
         .sheet(isPresented: $showCategories) {
-            if #available(iOS 16.0, *) {
                 CategoriesSheetView(
                     categoryData: $currentCategoryData,
                     currentCategory: $currentCategoryType
                 )
                 .presentationDetents([.medium, .large])
-            } else {
-                // Fallback on earlier versions
-                CategoriesSheetView(
-                    categoryData: $currentCategoryData,
-                    currentCategory: $currentCategoryType
-                )
-                .navigationTitle("Categories")
-            }
         }
         .task {
             if currentCategoryType == CategoryType.featured && homeVM.featuredRecipes.count < categories.count {

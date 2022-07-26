@@ -37,6 +37,7 @@
 		DB943D3A288AD2E90035ECD5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D39288AD2E90035ECD5 /* FirebaseStorage */; };
 		DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */; };
 		DBC23F83288F40220057CD20 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = DBC23F82288F40220057CD20 /* HalfASheet */; };
+		DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F84289025AC0057CD20 /* ErrorCard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -63,6 +64,7 @@
 		DB943D2C288AD18B0035ECD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB943D3B288AD4860035ECD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSheetView.swift; sourceTree = "<group>"; };
+		DBC23F84289025AC0057CD20 /* ErrorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCard.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				DB2499FA288D66B000B35BDE /* LoadingIndicator.swift */,
 				DB249A00288D8F3200B35BDE /* MealCard.swift */,
 				DB249A06288ED32800B35BDE /* NutrientStickers.swift */,
+				DBC23F84289025AC0057CD20 /* ErrorCard.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 				DB249A05288ECE3E00B35BDE /* RecipeDetailsView.swift in Sources */,
 				DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */,
 				DB2499F1288C72AB00B35BDE /* FetchData.swift in Sources */,
+				DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */,
 				DB249A07288ED32800B35BDE /* NutrientStickers.swift in Sources */,
 				DB2499E6288BFA7900B35BDE /* AuthView.swift in Sources */,
 				DB2499FF288D76A700B35BDE /* ProfileView.swift in Sources */,
@@ -429,7 +433,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -460,7 +464,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
