@@ -11,10 +11,9 @@ struct HomeHeader: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authVM: AuthViewModel
+    @StateObject private var hapticFeedback = HapticFeedback()
     @Binding var showCategoriesSheet: Bool
     @State private var text: String = ""
-    
-    let haptics = UINotificationFeedbackGenerator()
     
     var body: some View {
         HStack {
@@ -23,7 +22,8 @@ struct HomeHeader: View {
             
             Button(action: {
                 showCategoriesSheet.toggle()
-                haptics.notificationOccurred(.success)
+                
+                hapticFeedback.trigger(intensity: .medium)
             }) {
                 Image(systemName: "line.3.horizontal.decrease.circle.fill")
                     .resizable()
@@ -35,20 +35,24 @@ struct HomeHeader: View {
             NavigationLink(destination: ProfileView()
                 .toolbar(.hidden)
                 .environmentObject(authVM)
-                .navigationTitle("Profile"), label: {
-                    AsyncImage(url: authVM.session?.photoURL) { image in
-                        image
-                            .resizable()
-                            .clipShape(Circle())
-                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                    } placeholder: {
-                        Image(systemName: "person")
-                            .resizable()
-                            .foregroundColor(Color.black.opacity(0.75))
-                            .frame(width: 35, height: 35)
-                    }
-                    .frame(width: 35, height: 35)
-                })
+                .navigationTitle("Profile")
+                .onAppear {
+                    hapticFeedback.trigger(intensity: .medium)
+                }
+                           , label: {
+                AsyncImage(url: authVM.session?.photoURL) { image in
+                    image
+                        .resizable()
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                } placeholder: {
+                    Image(systemName: "person")
+                        .resizable()
+                        .foregroundColor(Color.black.opacity(0.75))
+                        .frame(width: 35, height: 35)
+                }
+                .frame(width: 35, height: 35)
+            })
         }
         .frame(width: K.SCREEN_WIDTH - 30, height: 40)
         .padding(.vertical)

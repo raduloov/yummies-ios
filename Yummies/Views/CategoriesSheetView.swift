@@ -56,6 +56,7 @@ struct CategoriesSheetView: View {
 struct FormRowView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @StateObject private var hapticFeedback = HapticFeedback()
     @Binding var categoryData: Category
     @Binding var currentCategory: CategoryType
     
@@ -70,6 +71,8 @@ struct FormRowView: View {
             } else {
                 didSelectCategory(category: Category(emoji: emoji, title: title, query: query))
             }
+            
+            hapticFeedback.trigger(intensity: .medium)
         }) {
             HStack {
                 Text(emoji)

@@ -13,6 +13,7 @@ struct RecipeDetailsView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var recipeDetailsVM = RecipeDetailViewModel()
+    @StateObject private var hapticFeedback = HapticFeedback()
     @State private var showNutrientList: Bool = false
     @State private var showIngredientList: Bool = false
     
@@ -72,6 +73,7 @@ struct RecipeDetailsView: View {
                                 
                                 Button(action: {
                                     showNutrientList.toggle()
+                                    hapticFeedback.trigger(intensity: .medium)
                                 }) {
                                     Text("See all")
                                         .foregroundColor(Color.black.opacity(0.6))
@@ -105,6 +107,7 @@ struct RecipeDetailsView: View {
                                 
                                 Button(action: {
                                     showIngredientList.toggle()
+                                    hapticFeedback.trigger(intensity: .medium)
                                 }) {
                                     Text("See all")
                                         .foregroundColor(Color.black.opacity(0.6))
