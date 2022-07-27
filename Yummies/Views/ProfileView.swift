@@ -14,7 +14,7 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack {
-            Color("bgGradient2")
+            Color("bgGradient1")
                 .edgesIgnoringSafeArea(.all)
             
             VStack {

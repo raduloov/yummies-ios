@@ -35,6 +35,7 @@
 		DB943D36288AD2E90035ECD5 /* FirebaseFirestoreCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D35288AD2E90035ECD5 /* FirebaseFirestoreCombine-Community */; };
 		DB943D38288AD2E90035ECD5 /* FirebaseFirestoreSwift in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D37288AD2E90035ECD5 /* FirebaseFirestoreSwift */; };
 		DB943D3A288AD2E90035ECD5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D39288AD2E90035ECD5 /* FirebaseStorage */; };
+		DBBEE46E2891A7AB0040086A /* IngredientListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBEE46D2891A7AB0040086A /* IngredientListSheetView.swift */; };
 		DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */; };
 		DBC23F83288F40220057CD20 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = DBC23F82288F40220057CD20 /* HalfASheet */; };
 		DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F84289025AC0057CD20 /* ErrorCard.swift */; };
@@ -42,7 +43,7 @@
 		DBC23F8928912E4A0057CD20 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8828912E4A0057CD20 /* NavigationBar.swift */; };
 		DBC23F8C28913D130057CD20 /* PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8B28913D130057CD20 /* PullToRefresh.swift */; };
 		DBC23F8E28914CCB0057CD20 /* RecipeDetailsVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8D28914CCB0057CD20 /* RecipeDetailsVM.swift */; };
-		DBC23F90289175630057CD20 /* AllNutrientsSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8F289175630057CD20 /* AllNutrientsSheetView.swift */; };
+		DBC23F90289175630057CD20 /* NutrientListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8F289175630057CD20 /* NutrientListSheetView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,13 +69,14 @@
 		DB9198DA288AB21F00E66A64 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		DB943D2C288AD18B0035ECD5 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DB943D3B288AD4860035ECD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DBBEE46D2891A7AB0040086A /* IngredientListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListSheetView.swift; sourceTree = "<group>"; };
 		DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSheetView.swift; sourceTree = "<group>"; };
 		DBC23F84289025AC0057CD20 /* ErrorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCard.swift; sourceTree = "<group>"; };
 		DBC23F8628902D930057CD20 /* VerticalMealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMealCard.swift; sourceTree = "<group>"; };
 		DBC23F8828912E4A0057CD20 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
 		DBC23F8B28913D130057CD20 /* PullToRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefresh.swift; sourceTree = "<group>"; };
 		DBC23F8D28914CCB0057CD20 /* RecipeDetailsVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsVM.swift; sourceTree = "<group>"; };
-		DBC23F8F289175630057CD20 /* AllNutrientsSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllNutrientsSheetView.swift; sourceTree = "<group>"; };
+		DBC23F8F289175630057CD20 /* NutrientListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientListSheetView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -189,7 +191,8 @@
 				DB2499FE288D76A700B35BDE /* ProfileView.swift */,
 				DB249A04288ECE3E00B35BDE /* RecipeDetailsView.swift */,
 				DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */,
-				DBC23F8F289175630057CD20 /* AllNutrientsSheetView.swift */,
+				DBC23F8F289175630057CD20 /* NutrientListSheetView.swift */,
+				DBBEE46D2891A7AB0040086A /* IngredientListSheetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 				DB2499F9288D626200B35BDE /* APIModel.swift in Sources */,
 				DB2499E9288BFCAA00B35BDE /* HomeView.swift in Sources */,
 				DB2499F6288D5FEB00B35BDE /* Constants.swift in Sources */,
+				DBBEE46E2891A7AB0040086A /* IngredientListSheetView.swift in Sources */,
 				DB2499EF288C4FD900B35BDE /* HomeHeader.swift in Sources */,
 				DBC23F8728902D930057CD20 /* VerticalMealCard.swift in Sources */,
 				DBC23F8E28914CCB0057CD20 /* RecipeDetailsVM.swift in Sources */,
@@ -315,7 +319,7 @@
 				DB2499E6288BFA7900B35BDE /* AuthView.swift in Sources */,
 				DB2499FF288D76A700B35BDE /* ProfileView.swift in Sources */,
 				DB2499FD288D6FD200B35BDE /* Categories.swift in Sources */,
-				DBC23F90289175630057CD20 /* AllNutrientsSheetView.swift in Sources */,
+				DBC23F90289175630057CD20 /* NutrientListSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

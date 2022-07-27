@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct AllNutrientsSheetView: View {
+struct NutrientListSheetView: View {
     
     let nutrients: TotalNutrients
     

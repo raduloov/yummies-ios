@@ -13,9 +13,11 @@ struct RecipeDetailsView: View {
     
     @Environment(\.dismiss) private var dismiss
     @StateObject private var recipeDetailsVM = RecipeDetailViewModel()
-    @State private var showAllNutrients: Bool = false
+    @State private var showNutrientList: Bool = false
+    @State private var showIngredientList: Bool = false
     
     var body: some View {
+        
         ZStack {
             Color("bgGradient1")
                 .edgesIgnoringSafeArea(.all)
@@ -23,7 +25,18 @@ struct RecipeDetailsView: View {
             ScrollView {
                 NavigationBar(dismiss: dismiss)
                 
-                if let recipeData = recipeDetailsVM.recipeData?.recipe {
+                if recipeDetailsVM.fetchingError {
+                    ErrorCard {
+                        Task {
+                            await recipeDetailsVM.populateRecipeData(recipeID: recipeID)
+                        }
+                    }
+                } else if !recipeDetailsVM.recipeLoaded {
+                    VStack {
+                        LoadingIndicator(text: "Getting recipes...", size: 2)
+                    }
+                    .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                } else if let recipeData = recipeDetailsVM.recipeData?.recipe {
                     AsyncImage(url: URL(string: recipeData.image)) { image in
                         ZStack {
                             image
@@ -58,7 +71,7 @@ struct RecipeDetailsView: View {
                                 Spacer()
                                 
                                 Button(action: {
-                                    showAllNutrients.toggle()
+                                    showNutrientList.toggle()
                                 }) {
                                     Text("See all")
                                         .foregroundColor(Color.black.opacity(0.6))
@@ -80,10 +93,45 @@ struct RecipeDetailsView: View {
                                 ])
                             }
                         }
+                        .padding(.bottom)
+                        
+                        VStack {
+                            HStack {
+                                Text("Ingredients")
+                                    .font(.system(.title, design: .rounded))
+                                    .fontWeight(.medium)
+                                
+                                Spacer()
+                                
+                                Button(action: {
+                                    showIngredientList.toggle()
+                                }) {
+                                    Text("See all")
+                                        .foregroundColor(Color.black.opacity(0.6))
+                                }
+                            }
+                            .padding(.bottom, 5)
+                            
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    ForEach(recipeData.ingredientLines, id: \.self) { line in
+                                        Text(line)
+                                            .font(.system(.title3, design: .rounded))
+                                            .padding(.bottom, 0.2)
+                                    }
+                                }
+                                
+                                Spacer()
+                            }
+                        }
                     }
                     .padding()
-                    .sheet(isPresented: $showAllNutrients, content: {
-                        AllNutrientsSheetView(nutrients: recipeData.totalNutrients)
+                    .sheet(isPresented: $showNutrientList, content: {
+                        NutrientListSheetView(nutrients: recipeData.totalNutrients)
+                            .presentationDetents([.medium, .large])
+                    })
+                    .sheet(isPresented: $showIngredientList, content: {
+                        IngredientListSheetView(ingredients: recipeData.ingredients)
                             .presentationDetents([.medium, .large])
                     })
                 }

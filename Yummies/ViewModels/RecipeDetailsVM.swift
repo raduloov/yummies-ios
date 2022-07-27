@@ -35,7 +35,5 @@ class RecipeDetailViewModel: ObservableObject {
             }
             print(error)
         }
-        
     }
-    
 }

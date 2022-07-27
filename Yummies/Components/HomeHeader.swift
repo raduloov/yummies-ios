@@ -14,6 +14,8 @@ struct HomeHeader: View {
     @Binding var showCategoriesSheet: Bool
     @State private var text: String = ""
     
+    let haptics = UINotificationFeedbackGenerator()
+    
     var body: some View {
         HStack {
             TextField("Search for a recipe", text: $text)
@@ -21,6 +23,7 @@ struct HomeHeader: View {
             
             Button(action: {
                 showCategoriesSheet.toggle()
+                haptics.notificationOccurred(.success)
             }) {
                 Image(systemName: "line.3.horizontal.decrease.circle.fill")
                     .resizable()
