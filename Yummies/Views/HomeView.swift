@@ -14,7 +14,7 @@ struct HomeScreenView: View {
     @StateObject private var homeVM = HomeViewModel()
     @State var showCategories: Bool = false
     @State var currentCategoryType: CategoryType = CategoryType.featured
-    @State var currentCategoryData: Category = Category(emoji: "✨", title: "Featured")
+    @State var currentCategoryData: Category = Category(emoji: "⭐️", title: "Featured")
     
     var body: some View {
         ZStack {
@@ -32,11 +32,11 @@ struct HomeScreenView: View {
                     if currentCategoryType == CategoryType.featured {
                         if homeVM.fetchingError {
                             ErrorCard()
-                        } else if homeVM.featuredRecipes.count != featured.count {
+                        } else if homeVM.featuredRecipes.count < featured.count {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
-                            .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height / 2)
+                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
                         } else {
                             VStack {
                                 ForEach(0 ..< featured.count, id: \.self) { index in
@@ -51,7 +51,7 @@ struct HomeScreenView: View {
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             HStack(alignment: .top) {
                                                 ForEach(homeVM.featuredRecipes[index]) { recipe in
-                                                    MealCard(
+                                                    FeaturedMealCard(
                                                         uri: recipe.recipe.uri,
                                                         imageUrl: recipe.recipe.image,
                                                         label: recipe.recipe.label,
@@ -74,7 +74,7 @@ struct HomeScreenView: View {
                                 VStack {
                                     LoadingIndicator(text: "Getting recipes...", size: 2)
                                 }
-                                .frame(width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height / 2)
+                                .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
                             } else {
                                 VStack {
                                     ForEach(homeVM.selectedCategoryRecipes) { recipe in
@@ -109,7 +109,13 @@ struct HomeScreenView: View {
             }
         }
         .onChange(of: currentCategoryData.title) { _ in
-            Task { await homeVM.populateSelectedCategory(query: currentCategoryData.query!) }
+            Task {
+                if let query = currentCategoryData.query {
+                    await homeVM.populateSelectedCategory(query: query)
+                } else {
+                    await homeVM.populateFeaturedCategories()
+                }
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct ProfileView: View {
     
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authVM: AuthViewModel
     
     var body: some View {
@@ -17,6 +18,8 @@ struct ProfileView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
+                NavigationBar(dismiss: dismiss, title: "Profile")
+                
                 VStack {
                     AsyncImage(url: authVM.session?.photoURL) { image in
                         image
@@ -55,8 +58,6 @@ struct ProfileView: View {
                 }
                 .buttonStyle(.bordered)
             }
-            
-            
         }
     }
         

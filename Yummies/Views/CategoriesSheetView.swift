@@ -13,33 +13,43 @@ struct CategoriesSheetView: View {
     @Binding var currentCategory: CategoryType
     
     var body: some View {
-            VStack {
-                Form {
-                    Section(header: Text("Featured").font(.system(.title2)).padding(.top, 30)) {
-                        ForEach(0 ..< featuredCategories.count, id: \.self) { index in
-                            FormRowView(
-                                categoryData: $categoryData,
-                                currentCategory: $currentCategory,
-                                emoji: featuredCategories[index].emoji,
-                                title: featuredCategories[index].title,
-                                query: featuredCategories[index].query!
-                            )
-                        }
+        VStack {
+            Form {
+                Section(header: Text("").padding(.top, 30)) {
+                    FormRowView(
+                        categoryData: $categoryData,
+                        currentCategory: $currentCategory,
+                        emoji: "🏡",
+                        title: "Home",
+                        query: ""
+                    )
+                }
+                
+                Section(header: Text("Featured").font(.system(.title2))) {
+                    ForEach(0 ..< featuredCategories.count, id: \.self) { index in
+                        FormRowView(
+                            categoryData: $categoryData,
+                            currentCategory: $currentCategory,
+                            emoji: featuredCategories[index].emoji,
+                            title: featuredCategories[index].title,
+                            query: featuredCategories[index].query!
+                        )
                     }
-                    
-                    Section(header: Text("Other Categories").font(.system(.title2))) {
-                        ForEach(0 ..< categories.count, id: \.self) { index in
-                            FormRowView(
-                                categoryData: $categoryData,
-                                currentCategory: $currentCategory,
-                                emoji: categories[index].emoji,
-                                title: categories[index].title,
-                                query: categories[index].query!
-                            )
-                        }
+                }
+                
+                Section(header: Text("Other Categories").font(.system(.title2))) {
+                    ForEach(0 ..< categories.count, id: \.self) { index in
+                        FormRowView(
+                            categoryData: $categoryData,
+                            currentCategory: $currentCategory,
+                            emoji: categories[index].emoji,
+                            title: categories[index].title,
+                            query: categories[index].query!
+                        )
                     }
                 }
             }
+        }
     }
 }
 
@@ -54,7 +64,11 @@ struct FormRowView: View {
     
     var body: some View {
         Button(action: {
-            didSelectCategory(category: Category(emoji: emoji, title: title, query: query))
+            if title == "Home" {
+                didSelectHome()
+            } else {
+                didSelectCategory(category: Category(emoji: emoji, title: title, query: query))
+            }
         }) {
             HStack {
                 Text(emoji)
@@ -70,6 +84,12 @@ struct FormRowView: View {
         dismiss()
         categoryData = category
         currentCategory = CategoryType.specific
+    }
+    
+    func didSelectHome() {
+        dismiss()
+        categoryData = Category(emoji: "✨", title: "Featured")
+        currentCategory = CategoryType.featured
     }
 }
 

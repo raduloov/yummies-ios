@@ -57,7 +57,7 @@ class HomeViewModel: ObservableObject {
             }
         } catch {
             DispatchQueue.main.async {
-                self.fetchingError = true
+                self.recipesLoaded = true
             }
             print(error)
         }

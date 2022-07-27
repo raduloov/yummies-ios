@@ -9,21 +9,22 @@ import SwiftUI
 
 struct NutrientStickers: View {
     
-    var kcal: String
-    var protein: String
-    var sugars: String
+    var nutrients: [Nutrient]
     
     var body: some View {
         HStack {
-            NutrientSticker(color: "kcalSticker", label: "KCal", quantity: kcal, units: "kcal")
+//            Spacer()
             
-            Spacer()
-            
-            NutrientSticker(color: "proteinSticker", label: "Protein", quantity: protein, units: "g")
-            
-            Spacer()
-            
-            NutrientSticker(color: "sugarSticker", label: "Sugar", quantity: sugars, units: "g")
+            ForEach(0 ..< nutrients.count, id: \.self) { index in
+                NutrientSticker(
+                    color: nutrients[index].color,
+                    label: nutrients[index].label,
+                    quantity: nutrients[index].quantity,
+                    units: nutrients[index].units
+                )
+
+//                Spacer()
+            }
         }
         .padding(.horizontal)
     }
@@ -54,8 +55,15 @@ struct NutrientSticker: View {
     }
 }
 
-struct NutrientStickers_Previews: PreviewProvider {
-    static var previews: some View {
-        NutrientStickers(kcal: "100", protein: "100", sugars: "100")
-    }
+struct Nutrient {
+    let color: String
+    let label: String
+    let quantity: String
+    let units: String
 }
+
+//struct NutrientStickers_Previews: PreviewProvider {
+//    static var previews: some View {
+//        NutrientStickers(kcal: "100", protein: "100", sugars: "100")
+//    }
+//}

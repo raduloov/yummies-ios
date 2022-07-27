@@ -9,6 +9,7 @@ import SwiftUI
 
 struct HomeHeader: View {
     
+    @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authVM: AuthViewModel
     @Binding var showCategoriesSheet: Bool
     @State private var text: String = ""
@@ -29,6 +30,7 @@ struct HomeHeader: View {
             }
             
             NavigationLink(destination: ProfileView()
+                .toolbar(.hidden)
                 .environmentObject(authVM)
                 .navigationTitle("Profile"), label: {
                     AsyncImage(url: authVM.session?.photoURL) { image in
@@ -45,8 +47,8 @@ struct HomeHeader: View {
                     .frame(width: 35, height: 35)
                 })
         }
-        .frame(height: 40)
-        .padding()
+        .frame(width: K.SCREEN_WIDTH - 30, height: 40)
+        .padding(.vertical)
     }
 }
 
