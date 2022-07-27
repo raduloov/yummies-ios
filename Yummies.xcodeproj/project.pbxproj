@@ -40,6 +40,7 @@
 		DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F84289025AC0057CD20 /* ErrorCard.swift */; };
 		DBC23F8728902D930057CD20 /* MealCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8628902D930057CD20 /* MealCard.swift */; };
 		DBC23F8928912E4A0057CD20 /* NavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8828912E4A0057CD20 /* NavigationBar.swift */; };
+		DBC23F8C28913D130057CD20 /* PullToRefresh.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F8B28913D130057CD20 /* PullToRefresh.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -69,6 +70,7 @@
 		DBC23F84289025AC0057CD20 /* ErrorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCard.swift; sourceTree = "<group>"; };
 		DBC23F8628902D930057CD20 /* MealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealCard.swift; sourceTree = "<group>"; };
 		DBC23F8828912E4A0057CD20 /* NavigationBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationBar.swift; sourceTree = "<group>"; };
+		DBC23F8B28913D130057CD20 /* PullToRefresh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PullToRefresh.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				DBC23F84289025AC0057CD20 /* ErrorCard.swift */,
 				DBC23F8628902D930057CD20 /* MealCard.swift */,
 				DBC23F8828912E4A0057CD20 /* NavigationBar.swift */,
+				DBC23F8B28913D130057CD20 /* PullToRefresh.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -300,6 +303,7 @@
 				DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */,
 				DB2499F1288C72AB00B35BDE /* FetchData.swift in Sources */,
 				DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */,
+				DBC23F8C28913D130057CD20 /* PullToRefresh.swift in Sources */,
 				DB249A07288ED32800B35BDE /* NutrientStickers.swift in Sources */,
 				DB2499E6288BFA7900B35BDE /* AuthView.swift in Sources */,
 				DB2499FF288D76A700B35BDE /* ProfileView.swift in Sources */,

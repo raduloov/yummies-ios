@@ -57,9 +57,17 @@ class HomeViewModel: ObservableObject {
             }
         } catch {
             DispatchQueue.main.async {
-                self.recipesLoaded = true
+                self.fetchingError = true
             }
             print(error)
+        }
+    }
+    
+    func refreshRecipes(currentCategoryData: Category) async {
+        if let query = currentCategoryData.query {
+            await populateSelectedCategory(query: query)
+        } else {
+            await populateFeaturedCategories()
         }
     }
 }

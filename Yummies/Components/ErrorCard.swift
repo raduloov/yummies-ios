@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ErrorCard: View {
+    
+    var onTryAgain: () -> Void
+    
     var body: some View {
         RoundedRectangle(cornerRadius: 15)
             .fill(Color.white.opacity(0.7))
@@ -25,7 +28,7 @@ struct ErrorCard: View {
                     Spacer()
                     
                     Button(action: {
-                        
+                        onTryAgain()
                     }) {
                         HStack {
                             Image(systemName: "arrow.counterclockwise")
@@ -43,8 +46,8 @@ struct ErrorCard: View {
     }
 }
 
-struct ErrorCard_Previews: PreviewProvider {
-    static var previews: some View {
-        ErrorCard()
-    }
-}
+//struct ErrorCard_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ErrorCard()
+//    }
+//}
