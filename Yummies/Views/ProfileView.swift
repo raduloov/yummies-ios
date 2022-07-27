@@ -14,7 +14,7 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color("bgGradient1"), Color("bgGradient2")], startPoint: .bottom, endPoint: .top)
+            Color("bgGradient2")
                 .edgesIgnoringSafeArea(.all)
             
             VStack {

@@ -12,7 +12,7 @@ enum NetworkError: Error {
     case decodingError
 }
 
-class FetchData {
+class RecipeService {
     func get<T: Decodable>(url: URL, parse: (Data) -> T?) async throws -> T {
         
         let (data, response) = try await URLSession.shared.data(from: url)

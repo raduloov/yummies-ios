@@ -7,18 +7,19 @@
 
 import SwiftUI
 
-struct FeaturedMealCard: View {
+struct HorizontalMealCard: View {
     
     let uri: String
     let imageUrl: String
     let label: String
-    let nutrients: TotalDaily
+    let nutrients: TotalNutrients
     
     var body: some View {
         NavigationLink {
             // Extract recipe ID from URI
             let recipeID = String(self.uri.suffix(32))
             RecipeDetailsView(recipeID: recipeID)
+                .toolbar(.hidden)
         } label: {
             VStack {
                 ZStack {

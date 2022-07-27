@@ -29,10 +29,10 @@ struct Recipe: Codable {
     let cuisineType: [String]
     let mealType: [String]
     let dishType: [String]
-    let totalNutrients: TotalDaily
+    let totalNutrients: TotalNutrients
 }
 
-struct TotalDaily: Codable {
+struct TotalNutrients: Codable {
     let kcals: Nutrients
     let fat: Nutrients
     let satFat: Nutrients

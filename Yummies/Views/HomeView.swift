@@ -18,7 +18,7 @@ struct HomeScreenView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(colors: [Color("bgGradient1"), Color("bgGradient2")], startPoint: .bottom, endPoint: .top)
+            Color("bgGradient1")
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -35,7 +35,7 @@ struct HomeScreenView: View {
                         .font(.system(size: 35, weight: .heavy, design: .rounded))
                         .padding(.bottom, 20)
                     
-                    if currentCategoryType == CategoryType.featured {
+                    if currentCategoryType == .featured {
                         if homeVM.fetchingError {
                             ErrorCard {
                                 Task {
@@ -61,7 +61,7 @@ struct HomeScreenView: View {
                                         ScrollView(.horizontal, showsIndicators: false) {
                                             HStack(alignment: .top) {
                                                 ForEach(homeVM.featuredRecipes[index]) { recipe in
-                                                    FeaturedMealCard(
+                                                    HorizontalMealCard(
                                                         uri: recipe.recipe.uri,
                                                         imageUrl: recipe.recipe.image,
                                                         label: recipe.recipe.label,
@@ -76,7 +76,7 @@ struct HomeScreenView: View {
                         }
                     }
                     
-                    if currentCategoryType == CategoryType.specific {
+                    if currentCategoryType == .specific {
                         ScrollView {
                             if homeVM.fetchingError {
                                 ErrorCard {
@@ -92,7 +92,7 @@ struct HomeScreenView: View {
                             } else {
                                 VStack {
                                     ForEach(homeVM.selectedCategoryRecipes) { recipe in
-                                        MealCard(
+                                        VerticalMealCard(
                                             uri: recipe.recipe.uri,
                                             imageUrl: recipe.recipe.image,
                                             label: recipe.recipe.label,
@@ -117,9 +117,9 @@ struct HomeScreenView: View {
                 .presentationDetents([.medium, .large])
         }
         .task {
-            if currentCategoryType == CategoryType.featured && homeVM.featuredRecipes.count < categories.count {
+            if currentCategoryType == .featured && homeVM.featuredRecipes.count < categories.count {
                 await homeVM.populateFeaturedCategories()
-            } else if currentCategoryType == CategoryType.specific && !homeVM.recipesLoaded {
+            } else if currentCategoryType == .specific && !homeVM.recipesLoaded {
                 await homeVM.populateSelectedCategory(query: currentCategoryData.query!)
             }
         }

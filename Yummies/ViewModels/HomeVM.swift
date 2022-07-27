@@ -23,7 +23,7 @@ class HomeViewModel: ObservableObject {
         
         for category in featured {
             do {
-                let recipesResponse = try await FetchData().get(url: K.URLs.recipesByName(category.query)) { data in
+                let recipesResponse = try await RecipeService().get(url: K.URLs.recipesByName(category.query)) { data in
                     return try? JSONDecoder().decode(Recipes.self, from: data)
                 }
 
@@ -47,7 +47,7 @@ class HomeViewModel: ObservableObject {
         }
         
         do {
-            let recipesResponse = try await FetchData().get(url: K.URLs.recipesByName(query)) { data in
+            let recipesResponse = try await RecipeService().get(url: K.URLs.recipesByName(query)) { data in
                 return try? JSONDecoder().decode(Recipes.self, from: data)
             }
 

@@ -9,33 +9,48 @@ import SwiftUI
 
 struct NutrientStickers: View {
     
-    var nutrients: [Nutrient]
+    let nutrients: [Nutrient]
+    
+    var body: some View {
+            HStack {
+                ForEach(0 ..< nutrients.count, id: \.self) { index in
+                    NutrientSticker(
+                        color: nutrients[index].color,
+                        label: nutrients[index].label,
+                        quantity: nutrients[index].quantity,
+                        units: nutrients[index].units
+                    )
+                }
+            }
+            .padding(.horizontal)
+        }
+}
+
+struct NutrientStickersLargeRow: View {
+    
+    let nutrients: [Nutrient]
     
     var body: some View {
         HStack {
-//            Spacer()
-            
             ForEach(0 ..< nutrients.count, id: \.self) { index in
-                NutrientSticker(
+                NutrientStickerLarge(
                     color: nutrients[index].color,
                     label: nutrients[index].label,
                     quantity: nutrients[index].quantity,
                     units: nutrients[index].units
                 )
-
-//                Spacer()
             }
         }
-        .padding(.horizontal)
     }
 }
 
+
 struct NutrientSticker: View {
     
-    var color: String
-    var label: String
-    var quantity: String
-    var units: String
+    let color: String
+    let label: String
+    let quantity: String
+    let units: String
     
     var body: some View {
         ZStack {
@@ -45,13 +60,49 @@ struct NutrientSticker: View {
                     Circle()
                         .stroke(Color.white, style: StrokeStyle(lineWidth: 3, dash: [2]))
                 )
-            VStack {
                 Text("\(label)\n\(quantity)\(units == "g" ? "g" : "")")
                     .foregroundColor(Color.black)
                     .font(.system(.footnote, design: .rounded))
-            }
         }
         .frame(width: 55, height: 55)
+    }
+}
+
+struct NutrientStickerLarge: View {
+    
+    let color: String
+    let label: String
+    let quantity: String
+    let units: String
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 35)
+                .fill(Color(color).gradient)
+                .frame(height: 70)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 35)
+                        .stroke(Color.white, style: StrokeStyle(lineWidth: 3, dash: [2]))
+                    HStack {
+                        Circle()
+                            .fill(Color.white.opacity(0.7))
+                            .padding(7)
+                            .overlay {
+                                Text(quantity)
+                                    .fontWeight(.medium)
+                            }
+                        VStack(alignment: .leading) {
+                            Text(label)
+                                .font(.system(size: 20, weight: .medium))
+                            Text(units == "g" ? "Grams" : "KCal")
+                                .foregroundColor(Color.black.opacity(0.6))
+                                .fontWeight(.medium)
+                        }
+                        
+                        Spacer()
+                    }
+                }
+        }
     }
 }
 

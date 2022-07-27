@@ -58,6 +58,7 @@ struct FormRowView: View {
     @Environment(\.dismiss) private var dismiss
     @Binding var categoryData: Category
     @Binding var currentCategory: CategoryType
+    
     var emoji: String
     var title: String
     var query: String
@@ -83,13 +84,13 @@ struct FormRowView: View {
     func didSelectCategory(category: Category) {
         dismiss()
         categoryData = category
-        currentCategory = CategoryType.specific
+        currentCategory = .specific
     }
     
     func didSelectHome() {
         dismiss()
         categoryData = Category(emoji: "✨", title: "Featured")
-        currentCategory = CategoryType.featured
+        currentCategory = .featured
     }
 }
 
@@ -97,7 +98,7 @@ struct CategoriesSheetView_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesSheetView(
             categoryData: .constant(Category(emoji: "✨", title: "Featured")),
-            currentCategory: .constant(CategoryType.featured)
+            currentCategory: .constant(.featured)
         )
     }
 }
