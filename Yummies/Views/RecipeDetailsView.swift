@@ -24,7 +24,7 @@ struct RecipeDetailsView: View {
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {
-                NavigationBar(dismiss: dismiss)
+                NavigationBar(dismiss: dismiss, favoriteButton: true)
                 
                 if recipeDetailsVM.fetchingError {
                     ErrorCard {

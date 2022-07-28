@@ -10,7 +10,7 @@ import FirebaseService
 
 struct AuthView: View {
     
-    @EnvironmentObject var signInVM: AuthViewModel
+    @EnvironmentObject private var authVM: AuthViewModel
     
     var body: some View {
         VStack {
@@ -38,7 +38,7 @@ struct AuthView: View {
             Spacer()
 
             Button(action: {
-                signInVM.signUpWithGoogle()
+                authVM.signUpWithGoogle()
             }) {
                 HStack {
                     Image("GoogleLogo")

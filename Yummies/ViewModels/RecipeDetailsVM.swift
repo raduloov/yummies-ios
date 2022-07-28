@@ -36,4 +36,8 @@ class RecipeDetailViewModel: ObservableObject {
             print(error)
         }
     }
+    
+    func favoriteRecipe() {
+        print("FAVORITE")
+    }
 }

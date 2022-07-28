@@ -11,17 +11,17 @@ import GoogleSignIn
 import Combine
 
 class AuthViewModel: ObservableObject {
-        
-    @Published var session: User? { didSet { self.didChange.send(self) }}
+    
     var didChange = PassthroughSubject<AuthViewModel, Never>()
     var handle: AuthStateDidChangeListenerHandle?
+    
+    @Published var session: User? { didSet { self.didChange.send(self) }}
+    
     
     func listen () {
         // Monitor authentication changes using firebase
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if let user = user {
-                // If we have a user, create a new user model
-                print("Got user: \(user)")
                 self.session = User(
                     uid: user.uid,
                     displayName: user.displayName,
@@ -29,7 +29,6 @@ class AuthViewModel: ObservableObject {
                     photoURL: user.photoURL
                 )
             } else {
-                // If we don't have a user, set our session to nil
                 self.session = nil
             }
         }
@@ -60,8 +59,9 @@ class AuthViewModel: ObservableObject {
                 guard let user = result?.user else { return }
                 
                 print(user.displayName ?? "Success!!")
+                
+                Database().createUserCollection(userID: user.uid)
             }
-            
         }
     }
     

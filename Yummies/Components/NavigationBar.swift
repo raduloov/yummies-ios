@@ -11,6 +11,7 @@ struct NavigationBar: View {
     
     var dismiss: DismissAction
     var title: String?
+    var favoriteButton: Bool = false
     
     var body: some View {
         HStack {
@@ -34,15 +35,23 @@ struct NavigationBar: View {
             
             Spacer()
             
-            // Empty element to help with alignment
-            Button(action: {
+            if favoriteButton {
+                Button(action: {
 
-            }) {
-                Image(systemName: "chevron.backward")
-                    .resizable()
-                    .scaledToFit()
+                }) {
+                    Image(systemName: "heart")
+                        .resizable()
+                        .scaledToFit()
+                        .foregroundColor(Color.red)
+                }
+            } else {
+                // Empty element to help with alignment
+                Button(action: {
+                    
+                }) {
+                }
+                .opacity(0)
             }
-            .opacity(0)
         }
         .frame(height: 25)
         .padding()

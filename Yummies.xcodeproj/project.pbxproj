@@ -37,6 +37,7 @@
 		DB943D3A288AD2E90035ECD5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = DB943D39288AD2E90035ECD5 /* FirebaseStorage */; };
 		DBBEE46E2891A7AB0040086A /* IngredientListSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBEE46D2891A7AB0040086A /* IngredientListSheetView.swift */; };
 		DBBEE4722891E7C70040086A /* HapticFeedback.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBEE4712891E7C70040086A /* HapticFeedback.swift */; };
+		DBBEE4782892A05C0040086A /* Firestore.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBBEE4772892A05C0040086A /* Firestore.swift */; };
 		DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */; };
 		DBC23F83288F40220057CD20 /* HalfASheet in Frameworks */ = {isa = PBXBuildFile; productRef = DBC23F82288F40220057CD20 /* HalfASheet */; };
 		DBC23F85289025AC0057CD20 /* ErrorCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = DBC23F84289025AC0057CD20 /* ErrorCard.swift */; };
@@ -72,6 +73,7 @@
 		DB943D3B288AD4860035ECD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DBBEE46D2891A7AB0040086A /* IngredientListSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientListSheetView.swift; sourceTree = "<group>"; };
 		DBBEE4712891E7C70040086A /* HapticFeedback.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticFeedback.swift; sourceTree = "<group>"; };
+		DBBEE4772892A05C0040086A /* Firestore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Firestore.swift; sourceTree = "<group>"; };
 		DBC23F7F288F37F20057CD20 /* CategoriesSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoriesSheetView.swift; sourceTree = "<group>"; };
 		DBC23F84289025AC0057CD20 /* ErrorCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCard.swift; sourceTree = "<group>"; };
 		DBC23F8628902D930057CD20 /* VerticalMealCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalMealCard.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				DB2499E3288BEEB400B35BDE /* Application.swift */,
 				DB2499F0288C72AB00B35BDE /* RecipeService.swift */,
 				DBBEE4712891E7C70040086A /* HapticFeedback.swift */,
+				DBBEE4772892A05C0040086A /* Firestore.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				DBC23F8E28914CCB0057CD20 /* RecipeDetailsVM.swift in Sources */,
 				DBC23F8928912E4A0057CD20 /* NavigationBar.swift in Sources */,
 				DB2499E1288BEDC700B35BDE /* AuthVM.swift in Sources */,
+				DBBEE4782892A05C0040086A /* Firestore.swift in Sources */,
 				DB249A05288ECE3E00B35BDE /* RecipeDetailsView.swift in Sources */,
 				DBC23F80288F37F20057CD20 /* CategoriesSheetView.swift in Sources */,
 				DB2499F1288C72AB00B35BDE /* RecipeService.swift in Sources */,
