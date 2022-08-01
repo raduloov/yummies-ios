@@ -11,7 +11,7 @@ import Combine
 class HomeViewModel: ObservableObject {
     
     @Published var featuredRecipes: [[Result]] = []
-    @Published var selectedCategoryRecipes: [Result] = []
+    @Published var fetchedRecipes: [Result] = []
     @Published var recipesLoaded: Bool = false
     @Published var fetchingError: Bool = false
     
@@ -39,7 +39,9 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    func populateSelectedCategory(query: String) async {
+    func populateByQuery(query: String) async {
+        
+        print("RUN")
         
         DispatchQueue.main.async {
             self.recipesLoaded = false
@@ -52,7 +54,7 @@ class HomeViewModel: ObservableObject {
             }
 
             DispatchQueue.main.async {
-                self.selectedCategoryRecipes = recipesResponse.hits
+                self.fetchedRecipes = recipesResponse.hits
                 self.recipesLoaded = true
             }
         } catch {
@@ -65,7 +67,7 @@ class HomeViewModel: ObservableObject {
     
     func refreshRecipes(currentCategoryData: Category) async {
         if let query = currentCategoryData.query {
-            await populateSelectedCategory(query: query)
+            await populateByQuery(query: query)
         } else {
             await populateFeaturedCategories()
         }

@@ -15,6 +15,7 @@ class Database: ObservableObject {
         
         let docRef = db.collection(userID).document("favorites")
         
+        // If there is no collection with the current user ID, create one
         docRef.getDocument { document, error in
             if !document!.exists {
                 db.collection(userID).document("favorites").setData([:])
@@ -24,5 +25,9 @@ class Database: ObservableObject {
                 }
             }
         }
+    }
+    
+    func addRecipeToFavorites(recipeID: String) {
+        
     }
 }

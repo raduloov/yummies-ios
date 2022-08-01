@@ -31,6 +31,7 @@ struct VerticalMealCard: View {
                         .font(.system(.body, design: .rounded))
                         .multilineTextAlignment(.center)
                         .lineLimit(3)
+                        .padding(.vertical)
                 }
                 .frame(width: 300)
                 

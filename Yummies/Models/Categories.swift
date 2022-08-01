@@ -23,7 +23,7 @@ struct Category {
 }
 
 let featured: [Featured] = [
-    Featured(title: "🚀 Trending", query: "trending"),
+    Featured(title: "🚀 Popular", query: "popular"),
     Featured(title: "🥗 Salad", query: "salad"),
     Featured(title: "🍔 Burgers", query: "burger"),
     Featured(title: "🍕 Pizza", query: "pizza"),

@@ -13,12 +13,22 @@ struct HomeHeader: View {
     @EnvironmentObject var authVM: AuthViewModel
     @StateObject private var hapticFeedback = HapticFeedback()
     @Binding var showCategoriesSheet: Bool
+    @Binding var searchTerm: String
+    @Binding var categoryType: CategoryType
+    @Binding var categoryData: Category
     @State private var text: String = ""
     
     var body: some View {
         HStack {
             TextField("Search for a recipe", text: $text)
                 .textFieldStyle(GradientTextFieldBackground())
+                .onSubmit {
+                    guard $text.wrappedValue.count > 0 else { return }
+                    
+                    searchTerm = $text.wrappedValue
+                    categoryType = .search
+                    categoryData = Category(emoji: "", title: "", query: searchTerm)
+                }
             
             Button(action: {
                 showCategoriesSheet.toggle()
@@ -80,7 +90,12 @@ struct GradientTextFieldBackground: TextFieldStyle {
 
 struct HomeHeader_Previews: PreviewProvider {
     static var previews: some View {
-        HomeHeader(showCategoriesSheet: .constant(false))
-            .environmentObject(AuthViewModel())
+        HomeHeader(
+            showCategoriesSheet: .constant(false),
+            searchTerm: .constant(""),
+            categoryType: .constant(.featured),
+            categoryData: .constant(Category(emoji: "", title: ""))
+        )
+        .environmentObject(AuthViewModel())
     }
 }
