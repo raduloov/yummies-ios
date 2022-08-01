@@ -47,7 +47,7 @@ let categories: [Category] = [
 ]
 
 let featuredCategories: [Category] = [
-    Category(emoji: "🚀", title: "Trending", query: "trending"),
+    Category(emoji: "🚀", title: "Popular", query: "popular"),
     Category(emoji: "🥗", title: "Salad", query: "salad"),
     Category(emoji: "🍔", title: "Burgers", query: "burgers"),
     Category(emoji: "🍕", title: "Pizza", query: "pizza"),

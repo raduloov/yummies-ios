@@ -10,7 +10,7 @@ import FirebaseAuth
 
 struct HomeScreenView: View {
     
-    @EnvironmentObject var authVM: AuthViewModel
+    @EnvironmentObject private var authVM: AuthViewModel
     @StateObject private var homeVM = HomeViewModel()
     @StateObject private var database = Database()
     @State var showCategories: Bool = false
@@ -39,6 +39,10 @@ struct HomeScreenView: View {
                     }
                     
                     if currentCategoryType != .search {
+                        Text("📌 Pinned")
+                            .font(.system(size: 35, weight: .heavy, design: .rounded))
+                            .padding(.bottom, 20)
+                        
                         Text("\(currentCategoryData.emoji) \(currentCategoryData.title)")
                             .font(.system(size: 35, weight: .heavy, design: .rounded))
                             .padding(.bottom, 20)
@@ -74,7 +78,8 @@ struct HomeScreenView: View {
                                                         uri: recipe.recipe.uri,
                                                         imageUrl: recipe.recipe.image,
                                                         label: recipe.recipe.label,
-                                                        nutrients: recipe.recipe.totalNutrients
+                                                        nutrients: recipe.recipe.totalNutrients,
+                                                        userID: authVM.session?.uid ?? ""
                                                     )
                                                 }
                                             }
@@ -104,7 +109,8 @@ struct HomeScreenView: View {
                                             uri: recipe.recipe.uri,
                                             imageUrl: recipe.recipe.image,
                                             label: recipe.recipe.label,
-                                            nutrients: recipe.recipe.totalNutrients
+                                            nutrients: recipe.recipe.totalNutrients,
+                                            userID: authVM.session?.uid ?? ""
                                         )
                                     }
                                 }
@@ -132,7 +138,8 @@ struct HomeScreenView: View {
                                         uri: recipe.recipe.uri,
                                         imageUrl: recipe.recipe.image,
                                         label: recipe.recipe.label,
-                                        nutrients: recipe.recipe.totalNutrients
+                                        nutrients: recipe.recipe.totalNutrients,
+                                        userID: authVM.session?.uid ?? ""
                                     )
                                 }
                             }

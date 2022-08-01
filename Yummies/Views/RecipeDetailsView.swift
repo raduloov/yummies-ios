@@ -10,8 +10,10 @@ import SwiftUI
 struct RecipeDetailsView: View {
     
     let recipeID: String
+    let userID: String
     
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject var authVM: AuthViewModel
     @StateObject private var recipeDetailsVM = RecipeDetailViewModel()
     @StateObject private var hapticFeedback = HapticFeedback()
     @State private var showNutrientList: Bool = false
@@ -24,7 +26,7 @@ struct RecipeDetailsView: View {
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {
-                NavigationBar(dismiss: dismiss, favoriteButton: true)
+                NavigationBar(dismiss: dismiss, favoriteButton: true, userID: userID, recipeID: recipeID)
                 
                 if recipeDetailsVM.fetchingError {
                     ErrorCard {
@@ -148,6 +150,7 @@ struct RecipeDetailsView: View {
 
 struct RecipeDetailsView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeDetailsView(recipeID: "d086f51bd7ca046eac74bda9198ece46")
+        RecipeDetailsView(recipeID: "d086f51bd7ca046eac74bda9198ece46", userID: "")
+            .environmentObject(AuthViewModel())
     }
 }

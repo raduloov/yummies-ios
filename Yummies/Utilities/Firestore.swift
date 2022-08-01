@@ -10,15 +10,15 @@ import Firebase
 
 class Database: ObservableObject {
     
+    let db = Firestore.firestore()
+    
     func createUserCollection(userID: String) {
-        let db = Firestore.firestore()
-        
-        let docRef = db.collection(userID).document("favorites")
+        let pinnedRecipesRef = db.collection("users").document(userID)
         
         // If there is no collection with the current user ID, create one
-        docRef.getDocument { document, error in
+        pinnedRecipesRef.getDocument { document, error in
             if !document!.exists {
-                db.collection(userID).document("favorites").setData([:])
+                self.db.collection("users").document(userID).setData(["pinnedRecipes":[]])
                 
                 if let error = error {
                     fatalError("Unable to create favorites document: \(error.localizedDescription)")
@@ -27,7 +27,50 @@ class Database: ObservableObject {
         }
     }
     
-    func addRecipeToFavorites(recipeID: String) {
+    func pinRecipe(userID: String, recipeID: String) {
         
+        let pinnedRecipesRef = db.collection("users").document(userID)
+        
+        pinnedRecipesRef.updateData([
+            "pinnedRecipes": FieldValue.arrayUnion([recipeID])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func unpinRecipe(userID: String, recipeID: String) {
+        
+        let pinnedRecipesRef = db.collection("users").document(userID)
+        
+        pinnedRecipesRef.updateData([
+            "pinnedRecipes": FieldValue.arrayRemove([recipeID])
+        ]) { error in
+            if let error = error {
+                print("Error updating document: \(error)")
+            } else {
+                print("Document successfully updated")
+            }
+        }
+    }
+    
+    func checkIsPinned(userID: String, recipeID: String, completion: @escaping ((Bool) -> Void)) {
+        
+        var recipeIsPinned: Bool = false
+        
+        let pinnedRecipesRef = db.collection("users").document(userID)
+        
+        pinnedRecipesRef.getDocument { document, error in
+            if let document = document, document.exists {
+                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [Any]
+                
+                recipeIsPinned = pinnedRecipes.contains(where: { $0 as! String == recipeID })
+                
+                completion(recipeIsPinned)
+            }
+        }
     }
 }

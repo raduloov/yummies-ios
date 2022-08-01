@@ -41,8 +41,6 @@ class HomeViewModel: ObservableObject {
     
     func populateByQuery(query: String) async {
         
-        print("RUN")
-        
         DispatchQueue.main.async {
             self.recipesLoaded = false
             self.fetchingError = false

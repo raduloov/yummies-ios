@@ -12,6 +12,10 @@ struct NavigationBar: View {
     var dismiss: DismissAction
     var title: String?
     var favoriteButton: Bool = false
+    var userID: String?
+    var recipeID: String?
+    
+    @State private var isPinned: Bool = false
     
     var body: some View {
         HStack {
@@ -37,9 +41,17 @@ struct NavigationBar: View {
             
             if favoriteButton {
                 Button(action: {
-
+                    guard let uid = userID else { return }
+                    
+                    if !isPinned {
+                        Database().pinRecipe(userID: uid, recipeID: recipeID!)
+                    } else {
+                        Database().unpinRecipe(userID: uid, recipeID: recipeID!)
+                    }
+                    
+                    isPinned.toggle()
                 }) {
-                    Image(systemName: "heart")
+                    Image(systemName: isPinned ? "pin.fill" : "pin")
                         .resizable()
                         .scaledToFit()
                         .foregroundColor(Color.red)
@@ -55,6 +67,17 @@ struct NavigationBar: View {
         }
         .frame(height: 25)
         .padding()
+        .onAppear {
+            if let userID = userID, let recipeID = recipeID {
+                
+                Database().checkIsPinned(userID: userID, recipeID: recipeID) { recipeIsPinned in
+                    isPinned = recipeIsPinned
+                    print(recipeIsPinned)
+                }
+                    
+                
+            }
+        }
     }
 }
 

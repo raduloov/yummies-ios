@@ -13,12 +13,13 @@ struct HorizontalMealCard: View {
     let imageUrl: String
     let label: String
     let nutrients: TotalNutrients
+    let userID: String
     
     var body: some View {
         NavigationLink {
             // Extract recipe ID from URI
             let recipeID = String(self.uri.suffix(32))
-            RecipeDetailsView(recipeID: recipeID)
+            RecipeDetailsView(recipeID: recipeID, userID: userID)
                 .toolbar(.hidden)
         } label: {
             VStack {
