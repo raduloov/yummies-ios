@@ -13,15 +13,15 @@ class Database: ObservableObject {
     let db = Firestore.firestore()
     
     func createUserCollection(userID: String) {
-        let pinnedRecipesRef = db.collection("users").document(userID)
+        let userRef = db.collection("users").document(userID)
         
         // If there is no collection with the current user ID, create one
-        pinnedRecipesRef.getDocument { document, error in
+        userRef.getDocument { document, error in
             if !document!.exists {
                 self.db.collection("users").document(userID).setData(["pinnedRecipes":[]])
                 
                 if let error = error {
-                    fatalError("Unable to create favorites document: \(error.localizedDescription)")
+                    fatalError("Unable to create pinned recipes document: \(error.localizedDescription)")
                 }
             }
         }
@@ -29,9 +29,9 @@ class Database: ObservableObject {
     
     func pinRecipe(userID: String, recipeID: String) {
         
-        let pinnedRecipesRef = db.collection("users").document(userID)
+        let userRef = db.collection("users").document(userID)
         
-        pinnedRecipesRef.updateData([
+        userRef.updateData([
             "pinnedRecipes": FieldValue.arrayUnion([recipeID])
         ]) { error in
             if let error = error {
@@ -44,9 +44,9 @@ class Database: ObservableObject {
     
     func unpinRecipe(userID: String, recipeID: String) {
         
-        let pinnedRecipesRef = db.collection("users").document(userID)
+        let userRef = db.collection("users").document(userID)
         
-        pinnedRecipesRef.updateData([
+        userRef.updateData([
             "pinnedRecipes": FieldValue.arrayRemove([recipeID])
         ]) { error in
             if let error = error {
@@ -61,9 +61,9 @@ class Database: ObservableObject {
         
         var recipeIsPinned: Bool = false
         
-        let pinnedRecipesRef = db.collection("users").document(userID)
+        let userRef = db.collection("users").document(userID)
         
-        pinnedRecipesRef.getDocument { document, error in
+        userRef.getDocument { document, error in
             if let document = document, document.exists {
                 let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
                 
@@ -76,13 +76,55 @@ class Database: ObservableObject {
     
     func getPinnedRecipes(userID: String, completion: @escaping (([String]) -> Void)) {
         
-        let pinnedRecipesRef = db.collection("users").document(userID)
+        let userRef = db.collection("users").document(userID)
         
-        pinnedRecipesRef.getDocument { document, error in
+        userRef.getDocument { document, error in
             if let document = document, document.exists {
                 let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
                 
                 completion(pinnedRecipes)
+            }
+        }
+    }
+    
+    func setDateJoined(userID: String) {
+        
+        let userRef = db.collection("users").document(userID)
+        
+        userRef.getDocument { document, error in
+            if let document = document, document.exists {
+                let dateJoinedField = document.data()!["dateJoined"]
+                
+                if dateJoinedField == nil {
+                    
+                    let date = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "dd.MM.yyyy"
+                    let dateJoined = dateFormatter.string(from: date)
+                    
+                    userRef.updateData([
+                        "dateJoined": dateJoined
+                    ]) { error in
+                        if let error = error {
+                            print("Error updating document: \(error)")
+                        } else {
+                            print("Document successfully updated")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func getDateJoined(userID: String, completion: @escaping ((String) -> Void)) {
+        
+        let userRef = db.collection("users").document(userID)
+        
+        userRef.getDocument { document, error in
+            if let document = document, document.exists {
+                let dateJoined = document.data()!["dateJoined"] as! String
+                
+                completion(dateJoined)
             }
         }
     }

@@ -61,6 +61,7 @@ class AuthViewModel: ObservableObject {
                 print(user.displayName ?? "Success!!")
                 
                 Database().createUserCollection(userID: user.uid)
+                Database().setDateJoined(userID: user.uid)
             }
         }
     }

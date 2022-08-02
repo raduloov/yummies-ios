@@ -11,6 +11,8 @@ struct ProfileView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authVM: AuthViewModel
+    @State private var dateJoined: String = ""
+    @State private var pinnedRecipesCount: Int = 0
     
     var body: some View {
         ZStack {
@@ -42,6 +44,16 @@ struct ProfileView: View {
                         .fontWeight(.medium)
                 }
                 
+                Form {
+                    Section(header: Text("Profile info")) {
+                        ProfileInfoRow(firstItem: "Full name:", secondItem: authVM.session?.displayName ?? "No Name")
+                        ProfileInfoRow(firstItem: "Email:", secondItem: authVM.session?.email ?? "No Email")
+                        ProfileInfoRow(firstItem: "Date joined:", secondItem: dateJoined)
+                        ProfileInfoRow(firstItem: "Recipes pinned:", secondItem: String(pinnedRecipesCount))
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                
                 Spacer()
                 
                 Button(action: {
@@ -59,8 +71,32 @@ struct ProfileView: View {
                 .buttonStyle(.bordered)
             }
         }
+        .onAppear {
+            Database().getDateJoined(userID: authVM.session!.uid) { date in
+                dateJoined = date
+            }
+            
+            Database().getPinnedRecipes(userID: authVM.session!.uid) { recipes in
+                pinnedRecipesCount = recipes.count
+            }
+        }
     }
-        
+}
+
+struct ProfileInfoRow: View {
+    
+    var firstItem: String
+    var secondItem: String
+    
+    var body: some View {
+        HStack {
+            Text(firstItem)
+            
+            Spacer()
+            
+            Text(secondItem)
+        }
+    }
 }
 
 struct ProfileView_Previews: PreviewProvider {
