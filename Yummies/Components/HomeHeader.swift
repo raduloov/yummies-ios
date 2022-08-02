@@ -25,7 +25,7 @@ struct HomeHeader: View {
                 .onSubmit {
                     guard $text.wrappedValue.count > 0 else { return }
                     
-                    searchTerm = $text.wrappedValue
+                    searchTerm = SearchUtil().formatSearchTerm(searchTerm: $text.wrappedValue)
                     categoryType = .search
                     categoryData = Category(emoji: "", title: "", query: searchTerm)
                 }

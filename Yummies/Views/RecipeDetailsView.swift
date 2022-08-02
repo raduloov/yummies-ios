@@ -36,7 +36,7 @@ struct RecipeDetailsView: View {
                     }
                 } else if !recipeDetailsVM.recipeLoaded {
                     VStack {
-                        LoadingIndicator(text: "Getting recipes...", size: 2)
+                        LoadingIndicator(text: "Getting recipe info...", size: 2)
                     }
                     .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
                 } else if let recipeData = recipeDetailsVM.recipeData?.recipe {

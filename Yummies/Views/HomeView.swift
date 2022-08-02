@@ -38,23 +38,17 @@ struct HomeScreenView: View {
                         }
                     }
                     
-                    if homeVM.pinnedRecipes.count > 0 && currentCategoryType == .featured {
+                    if homeVM.pinnedRecipes.count > 0 && currentCategoryType == .featured && !homeVM.fetchingError {
                         HStack {
                             Text("📌 Pinned")
                                 .font(.system(size: 35, weight: .heavy, design: .rounded))
-                            .padding(.bottom, 20)
+                                .padding(.bottom, 20)
                             
                             Spacer()
                         }
                         .padding(.horizontal)
-
-                        if homeVM.fetchingError {
-                            ErrorCard {
-                                Task {
-                                    await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
-                                }
-                            }
-                        } else if homeVM.featuredRecipes.count < featured.count {
+                        
+                        if homeVM.featuredRecipes.count < featured.count {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -80,21 +74,23 @@ struct HomeScreenView: View {
                         HStack {
                             Text("\(currentCategoryData.emoji) \(currentCategoryData.title)")
                                 .font(.system(size: 35, weight: .heavy, design: .rounded))
-                            .padding(.bottom, 20)
+                                .padding(.bottom, 20)
                             
                             Spacer()
                         }
                         .padding(.horizontal)
                     }
                     
-                    if currentCategoryType == .featured {
-                        if homeVM.fetchingError {
-                            ErrorCard {
-                                Task {
-                                    await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
-                                }
+                    if homeVM.fetchingError {
+                        ErrorCard {
+                            Task {
+                                await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
                             }
-                        } else if homeVM.featuredRecipes.count < featured.count {
+                        }
+                    }
+                    
+                    if currentCategoryType == .featured {
+                        if homeVM.featuredRecipes.count < featured.count {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -130,30 +126,30 @@ struct HomeScreenView: View {
                     }
                     
                     if currentCategoryType == .specific {
-                            if homeVM.fetchingError {
-                                ErrorCard {
-                                    Task {
-                                        await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
-                                    }
-                                }
-                            } else if !homeVM.recipesLoaded {
-                                VStack {
-                                    LoadingIndicator(text: "Getting recipes...", size: 2)
-                                }
-                                .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
-                            } else {
-                                VStack {
-                                    ForEach(homeVM.fetchedRecipes) { recipe in
-                                        VerticalMealCard(
-                                            uri: recipe.recipe.uri,
-                                            imageUrl: recipe.recipe.image,
-                                            label: recipe.recipe.label,
-                                            nutrients: recipe.recipe.totalNutrients,
-                                            userID: authVM.session?.uid ?? ""
-                                        )
-                                    }
+                        if homeVM.fetchingError {
+                            ErrorCard {
+                                Task {
+                                    await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
                                 }
                             }
+                        } else if !homeVM.recipesLoaded {
+                            VStack {
+                                LoadingIndicator(text: "Getting recipes...", size: 2)
+                            }
+                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                        } else {
+                            VStack {
+                                ForEach(homeVM.fetchedRecipes) { recipe in
+                                    VerticalMealCard(
+                                        uri: recipe.recipe.uri,
+                                        imageUrl: recipe.recipe.image,
+                                        label: recipe.recipe.label,
+                                        nutrients: recipe.recipe.totalNutrients,
+                                        userID: authVM.session?.uid ?? ""
+                                    )
+                                }
+                            }
+                        }
                     }
                     
                     if currentCategoryType == .search {
@@ -192,11 +188,11 @@ struct HomeScreenView: View {
         .navigationTitle("Home")
         .navigationBarHidden(true)
         .sheet(isPresented: $showCategories) {
-                CategoriesSheetView(
-                    categoryData: $currentCategoryData,
-                    currentCategory: $currentCategoryType
-                )
-                .presentationDetents([.medium, .large])
+            CategoriesSheetView(
+                categoryData: $currentCategoryData,
+                currentCategory: $currentCategoryType
+            )
+            .presentationDetents([.medium, .large])
         }
         .task {
             if currentCategoryType == .featured && homeVM.featuredRecipes.count < categories.count {

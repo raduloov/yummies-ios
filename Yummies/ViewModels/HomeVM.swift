@@ -10,7 +10,6 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
-    
     @Published var featuredRecipes: [[Result]] = []
     @Published var fetchedRecipes: [Result] = []
     @Published var pinnedRecipes: [Result] = []
