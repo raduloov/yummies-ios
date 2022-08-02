@@ -17,7 +17,7 @@ struct ErrorCard: View {
             .overlay {
                 VStack {
                     VStack {
-                        Text("Oops.. Something went wrong 💔")
+                        Text("Oops... Something went wrong 💔")
                             .font(.system(.title2, design: .rounded))
                         Text("Please try again in a few moments :)")
                             .font(.system(.title3, design: .rounded))

@@ -38,14 +38,53 @@ struct HomeScreenView: View {
                         }
                     }
                     
+                    if homeVM.pinnedRecipes.count > 0 && currentCategoryType == .featured {
+                        HStack {
+                            Text("📌 Pinned")
+                                .font(.system(size: 35, weight: .heavy, design: .rounded))
+                            .padding(.bottom, 20)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+
+                        if homeVM.fetchingError {
+                            ErrorCard {
+                                Task {
+                                    await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
+                                }
+                            }
+                        } else if homeVM.featuredRecipes.count < featured.count {
+                            VStack {
+                                LoadingIndicator(text: "Getting recipes...", size: 2)
+                            }
+                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 3)
+                        } else {
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack {
+                                    ForEach(homeVM.pinnedRecipes) { recipe in
+                                        HorizontalMealCard(
+                                            uri: recipe.recipe.uri,
+                                            imageUrl: recipe.recipe.image,
+                                            label: recipe.recipe.label,
+                                            nutrients: recipe.recipe.totalNutrients,
+                                            userID: authVM.session?.uid ?? ""
+                                        )
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    
                     if currentCategoryType != .search {
-                        Text("📌 Pinned")
-                            .font(.system(size: 35, weight: .heavy, design: .rounded))
+                        HStack {
+                            Text("\(currentCategoryData.emoji) \(currentCategoryData.title)")
+                                .font(.system(size: 35, weight: .heavy, design: .rounded))
                             .padding(.bottom, 20)
-                        
-                        Text("\(currentCategoryData.emoji) \(currentCategoryData.title)")
-                            .font(.system(size: 35, weight: .heavy, design: .rounded))
-                            .padding(.bottom, 20)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
                     }
                     
                     if currentCategoryType == .featured {
@@ -164,6 +203,13 @@ struct HomeScreenView: View {
                 await homeVM.populateFeaturedCategories()
             } else if currentCategoryType == .specific && !homeVM.recipesLoaded {
                 await homeVM.populateByQuery(query: currentCategoryData.query!)
+            }
+            
+            homeVM.getPinnedRecipeIDs(userID: authVM.session!.uid)
+        }
+        .onChange(of: homeVM.pinnedRecipeIDs) { _ in
+            Task {
+                await homeVM.populatePinnedRecipes(recipes: homeVM.pinnedRecipeIDs)
             }
         }
         .onChange(of: currentCategoryData.title) { _ in

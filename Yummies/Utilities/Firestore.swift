@@ -65,11 +65,24 @@ class Database: ObservableObject {
         
         pinnedRecipesRef.getDocument { document, error in
             if let document = document, document.exists {
-                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [Any]
+                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
                 
-                recipeIsPinned = pinnedRecipes.contains(where: { $0 as! String == recipeID })
+                recipeIsPinned = pinnedRecipes.contains(where: { $0 == recipeID })
                 
                 completion(recipeIsPinned)
+            }
+        }
+    }
+    
+    func getPinnedRecipes(userID: String, completion: @escaping (([String]) -> Void)) {
+        
+        let pinnedRecipesRef = db.collection("users").document(userID)
+        
+        pinnedRecipesRef.getDocument { document, error in
+            if let document = document, document.exists {
+                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
+                
+                completion(pinnedRecipes)
             }
         }
     }

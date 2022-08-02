@@ -69,13 +69,9 @@ struct NavigationBar: View {
         .padding()
         .onAppear {
             if let userID = userID, let recipeID = recipeID {
-                
                 Database().checkIsPinned(userID: userID, recipeID: recipeID) { recipeIsPinned in
                     isPinned = recipeIsPinned
-                    print(recipeIsPinned)
                 }
-                    
-                
             }
         }
     }
