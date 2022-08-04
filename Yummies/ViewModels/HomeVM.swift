@@ -68,13 +68,14 @@ class HomeViewModel: ObservableObject {
     func getPinnedRecipeIDs(userID: String) {
         Database().getPinnedRecipes(userID: userID) { recipes in
             self.pinnedRecipeIDs = recipes
+            print(self.pinnedRecipeIDs)
         }
     }
     
     func populatePinnedRecipes(recipes: [String]) async {
         DispatchQueue.main.async {
-            self.recipesLoaded = false
             self.fetchingError = false
+            self.pinnedRecipes = []
         }
         
         for recipeID in recipes {
@@ -85,7 +86,6 @@ class HomeViewModel: ObservableObject {
 
                 DispatchQueue.main.async {
                     self.pinnedRecipes.append(recipeResponse)
-                    self.recipesLoaded = true
                 }
             } catch {
                 DispatchQueue.main.async {

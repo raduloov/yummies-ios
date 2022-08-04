@@ -7,6 +7,7 @@
 
 enum CategoryType {
     case featured
+    case pinned
     case specific
     case search
 }
@@ -28,8 +29,6 @@ let featured: [Featured] = [
     Featured(title: "🍔 Burgers", query: "burger"),
     Featured(title: "🍕 Pizza", query: "pizza"),
     Featured(title: "🍣 Sushi", query: "sushi"),
-    Featured(title: "🐉 Chinese", query: "chinese"),
-    Featured(title: "🍰 Dessert", query: "dessert")
 ]
 
 let categories: [Category] = [

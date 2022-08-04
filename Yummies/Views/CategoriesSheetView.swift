@@ -9,6 +9,8 @@ import SwiftUI
 
 struct CategoriesSheetView: View {
     
+    var userID: String
+    
     @Binding var categoryData: Category
     @Binding var currentCategory: CategoryType
     
@@ -19,9 +21,17 @@ struct CategoriesSheetView: View {
                     FormRowView(
                         categoryData: $categoryData,
                         currentCategory: $currentCategory,
-                        emoji: "🏡",
-                        title: "Home",
+                        emoji: "⭐️",
+                        title: "Featured",
                         query: ""
+                    )
+                    FormRowView(
+                        categoryData: $categoryData,
+                        currentCategory: $currentCategory,
+                        emoji: "📌",
+                        title: "Pinned",
+                        query: "",
+                        userID: userID
                     )
                 }
                 
@@ -56,6 +66,7 @@ struct CategoriesSheetView: View {
 struct FormRowView: View {
     
     @Environment(\.dismiss) private var dismiss
+    @EnvironmentObject private var homeVM: HomeViewModel
     @StateObject private var hapticFeedback = HapticFeedback()
     @Binding var categoryData: Category
     @Binding var currentCategory: CategoryType
@@ -63,11 +74,14 @@ struct FormRowView: View {
     var emoji: String
     var title: String
     var query: String
+    var userID: String?
     
     var body: some View {
         Button(action: {
-            if title == "Home" {
+            if title == "Featured" {
                 didSelectHome()
+            } else if title == "Pinned" {
+                didSelectPinned()
             } else {
                 didSelectCategory(category: Category(emoji: emoji, title: title, query: query))
             }
@@ -92,14 +106,22 @@ struct FormRowView: View {
     
     func didSelectHome() {
         dismiss()
-        categoryData = Category(emoji: "✨", title: "Featured")
+        categoryData = Category(emoji: "⭐️", title: "Featured")
         currentCategory = .featured
+    }
+    
+    func didSelectPinned() {
+        dismiss()
+        categoryData = Category(emoji: "📌", title: "Pinned")
+        currentCategory = .pinned
+        homeVM.getPinnedRecipeIDs(userID: userID!)
     }
 }
 
 struct CategoriesSheetView_Previews: PreviewProvider {
     static var previews: some View {
         CategoriesSheetView(
+            userID: "",
             categoryData: .constant(Category(emoji: "✨", title: "Featured")),
             currentCategory: .constant(.featured)
         )

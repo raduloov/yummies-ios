@@ -38,38 +38,6 @@ struct HomeScreenView: View {
                         }
                     }
                     
-                    if homeVM.pinnedRecipes.count > 0 && currentCategoryType == .featured && !homeVM.fetchingError {
-                        HStack {
-                            Text("📌 Pinned")
-                                .font(.system(size: 35, weight: .heavy, design: .rounded))
-                                .padding(.bottom, 20)
-                            
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        
-                        if homeVM.featuredRecipes.count < featured.count {
-                            VStack {
-                                LoadingIndicator(text: "Getting recipes...", size: 2)
-                            }
-                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 3)
-                        } else {
-                            ScrollView(.horizontal, showsIndicators: false) {
-                                HStack {
-                                    ForEach(homeVM.pinnedRecipes) { recipe in
-                                        HorizontalMealCard(
-                                            uri: recipe.recipe.uri,
-                                            imageUrl: recipe.recipe.image,
-                                            label: recipe.recipe.label,
-                                            nutrients: recipe.recipe.totalNutrients,
-                                            userID: authVM.session?.uid ?? ""
-                                        )
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    
                     if currentCategoryType != .search {
                         HStack {
                             Text("\(currentCategoryData.emoji) \(currentCategoryData.title)")
@@ -81,10 +49,29 @@ struct HomeScreenView: View {
                         .padding(.horizontal)
                     }
                     
-                    if homeVM.fetchingError {
-                        ErrorCard {
-                            Task {
-                                await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
+                    if currentCategoryType == .pinned {
+                        if homeVM.fetchingError {
+                            ErrorCard {
+                                Task {
+                                    await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
+                                }
+                            }
+                        } else if homeVM.pinnedRecipes.count < homeVM.pinnedRecipeIDs.count {
+                            VStack {
+                                LoadingIndicator(text: "Getting recipes...", size: 2)
+                            }
+                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                        } else {
+                            VStack {
+                                ForEach(homeVM.pinnedRecipes) { recipe in
+                                    HorizontalMealCard(
+                                        uri: recipe.recipe.uri,
+                                        imageUrl: recipe.recipe.image,
+                                        label: recipe.recipe.label,
+                                        nutrients: recipe.recipe.totalNutrients,
+                                        userID: authVM.session?.uid ?? ""
+                                    )
+                                }
                             }
                         }
                     }
@@ -189,19 +176,21 @@ struct HomeScreenView: View {
         .navigationBarHidden(true)
         .sheet(isPresented: $showCategories) {
             CategoriesSheetView(
+                userID: authVM.session!.uid,
                 categoryData: $currentCategoryData,
                 currentCategory: $currentCategoryType
             )
             .presentationDetents([.medium, .large])
+            .environmentObject(homeVM)
         }
         .task {
             if currentCategoryType == .featured && homeVM.featuredRecipes.count < categories.count {
                 await homeVM.populateFeaturedCategories()
+            } else if currentCategoryType == .pinned {
+                homeVM.getPinnedRecipeIDs(userID: authVM.session!.uid)
             } else if currentCategoryType == .specific && !homeVM.recipesLoaded {
                 await homeVM.populateByQuery(query: currentCategoryData.query!)
             }
-            
-            homeVM.getPinnedRecipeIDs(userID: authVM.session!.uid)
         }
         .onChange(of: homeVM.pinnedRecipeIDs) { _ in
             Task {
