@@ -64,7 +64,7 @@ struct HomeScreenView: View {
                         } else {
                             VStack {
                                 ForEach(homeVM.pinnedRecipes) { recipe in
-                                    HorizontalMealCard(
+                                    VerticalMealCard(
                                         uri: recipe.recipe.uri,
                                         imageUrl: recipe.recipe.image,
                                         label: recipe.recipe.label,

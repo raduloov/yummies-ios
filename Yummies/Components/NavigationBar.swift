@@ -11,11 +11,14 @@ struct NavigationBar: View {
     
     var dismiss: DismissAction
     var title: String?
-    var favoriteButton: Bool = false
+    var pinButton: Bool = false
     var userID: String?
     var recipeID: String?
     
+    @StateObject private var hapticFeedback = HapticFeedback()
     @State private var isPinned: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var alertText: String = "Recipe pinned! 📌"
     
     var body: some View {
         HStack {
@@ -39,17 +42,22 @@ struct NavigationBar: View {
             
             Spacer()
             
-            if favoriteButton {
+            if pinButton {
                 Button(action: {
                     guard let uid = userID else { return }
                     
                     if !isPinned {
                         Database().pinRecipe(userID: uid, recipeID: recipeID!)
+                        alertText = "Recipe pinned! 📌"
+                        hapticFeedback.trigger(intensity: .rigid)
                     } else {
                         Database().unpinRecipe(userID: uid, recipeID: recipeID!)
+                        alertText = "Recipe unpinned! 💔"
+                        hapticFeedback.trigger(intensity: .medium)
                     }
                     
                     isPinned.toggle()
+                    showAlert = true
                 }) {
                     Image(systemName: isPinned ? "pin.fill" : "pin")
                         .resizable()
@@ -72,6 +80,11 @@ struct NavigationBar: View {
                 Database().checkIsPinned(userID: userID, recipeID: recipeID) { recipeIsPinned in
                     isPinned = recipeIsPinned
                 }
+            }
+        }
+        .alert(alertText, isPresented: $showAlert) {
+            Button("Great!", role: .cancel) {
+                hapticFeedback.trigger(intensity: .rigid)
             }
         }
     }

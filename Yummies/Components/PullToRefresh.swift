@@ -13,8 +13,7 @@ struct PullToRefresh: View {
     var onRefresh: () -> Void
     
     @State var needRefresh: Bool = false
-    
-    let haptics = UINotificationFeedbackGenerator()
+    @StateObject private var hapticFeedback = HapticFeedback()
     
     var body: some View {
         GeometryReader { geo in
@@ -28,7 +27,7 @@ struct PullToRefresh: View {
                     .onAppear {
                         if needRefresh {
                             needRefresh = false
-                            haptics.notificationOccurred(.success)
+                            hapticFeedback.trigger(intensity: .rigid)
                             onRefresh()
                         }
                     }
