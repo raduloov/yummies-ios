@@ -18,6 +18,7 @@ struct RecipeDetailsView: View {
     @StateObject private var hapticFeedback = HapticFeedback()
     @State private var showNutrientList: Bool = false
     @State private var showIngredientList: Bool = false
+    @State private var showWebView: Bool = false
     
     var body: some View {
         
@@ -83,15 +84,15 @@ struct RecipeDetailsView: View {
                             }
                             
                             VStack {
-                                NutrientStickersLargeRow(nutrients: [
+                                NutrientStickersRowLarge(nutrients: [
                                     Nutrient(color: "kcalSticker", label: "KCal", quantity: String(Int(recipeData.totalNutrients.kcals.quantity)), units: "kcal"),
                                     Nutrient(color: "proteinSticker", label: "Protein", quantity: String(Int(recipeData.totalNutrients.protein.quantity)), units: "g")
                                 ])
-                                NutrientStickersLargeRow(nutrients: [
+                                NutrientStickersRowLarge(nutrients: [
                                     Nutrient(color: "carbsSticker", label: "Carbs", quantity: String(Int(recipeData.totalNutrients.carbs.quantity)), units: "g"),
                                     Nutrient(color: "sugarSticker", label: "Sugars", quantity: String(Int(recipeData.totalNutrients.sugars.quantity)), units: "g")
                                 ])
-                                NutrientStickersLargeRow(nutrients: [
+                                NutrientStickersRowLarge(nutrients: [
                                     Nutrient(color: "satFatSticker", label: "Sat. Fat", quantity: String(Int(recipeData.totalNutrients.satFat.quantity)), units: "g"),
                                     Nutrient(color: "fiberSticker", label: "Fiber", quantity: String(Int(recipeData.totalNutrients.fiber.quantity)), units: "g")
                                 ])
@@ -129,6 +130,36 @@ struct RecipeDetailsView: View {
                                 Spacer()
                             }
                         }
+                        
+                        VStack {
+                            HStack {
+                                Text("More info")
+                                    .font(.system(.title, design: .rounded))
+                                    .fontWeight(.medium)
+                                
+                                 Spacer()
+                            }
+                            .padding(.vertical, 10)
+                            
+                            HStack {
+                                Button(action: {
+                                    showWebView.toggle()
+                                    hapticFeedback.trigger(intensity: .rigid)
+                                }) {
+                                    HStack {
+                                        Image(systemName: "info.circle")
+                                            .font(.system(.body, design: .rounded))
+                                            .foregroundColor(Color.black)
+                                        Text("Go to webpage")
+                                            .font(.system(.title2, design: .rounded))
+                                            .foregroundColor(Color.black)
+                                    }
+                                }
+                                .buttonStyle(.bordered)
+                                
+                                Spacer()
+                            }
+                        }
                     }
                     .padding()
                     .sheet(isPresented: $showNutrientList, content: {
@@ -139,6 +170,33 @@ struct RecipeDetailsView: View {
                         IngredientListSheetView(ingredients: recipeData.ingredients)
                             .presentationDetents([.medium, .large])
                     })
+                    .sheet(isPresented: $showWebView) {
+                        VStack {
+                            VStack {
+                                Capsule()
+                                    .foregroundColor(Color.gray)
+                                    .frame(width: 100, height: 5)
+                                    .padding(.top, 10)
+                                
+                                HStack {
+                                    Button(action: {
+                                        showWebView.toggle()
+                                        hapticFeedback.trigger(intensity: .soft)
+                                    }) {
+                                        Image(systemName: "xmark.circle")
+                                            .resizable()
+                                            .scaledToFit()
+                                            .foregroundColor(Color.black)
+                                    }
+                                    
+                                    Spacer()
+                                }
+                                .frame(height: 25)
+                                .padding(.horizontal, 10)
+                            }
+                            WebView(url: URL(string: recipeData.url)!)
+                        }
+                    }
                 }
             }
         }

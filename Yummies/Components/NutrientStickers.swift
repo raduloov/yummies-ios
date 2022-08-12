@@ -26,7 +26,7 @@ struct NutrientStickers: View {
         }
 }
 
-struct NutrientStickersLargeRow: View {
+struct NutrientStickersRowLarge: View {
     
     let nutrients: [Nutrient]
     

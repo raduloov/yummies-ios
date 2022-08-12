@@ -55,9 +55,7 @@ struct AuthView: View {
             .frame(height: 50)
             .padding()
             .foregroundColor(Color.black)
-            .background(
-                Capsule().strokeBorder(Color.black)
-            )
+            .buttonStyle(.bordered)
         }
         .padding()
     }

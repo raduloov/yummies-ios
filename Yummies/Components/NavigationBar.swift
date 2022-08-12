@@ -83,9 +83,7 @@ struct NavigationBar: View {
             }
         }
         .alert(alertText, isPresented: $showAlert) {
-            Button("Great!", role: .cancel) {
-                hapticFeedback.trigger(intensity: .rigid)
-            }
+            Button("Great!", role: .cancel) { }
         }
     }
 }
