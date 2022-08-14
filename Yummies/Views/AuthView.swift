@@ -11,6 +11,11 @@ import FirebaseService
 struct AuthView: View {
     
     @EnvironmentObject private var authVM: AuthViewModel
+    @State private var enteredEmail: String = ""
+    @State private var enteredPassword: String = ""
+    @State private var showSignUpSheet: Bool = false
+    @State private var showError: Bool = false
+    @State private var errorText: String = ""
     
     var body: some View {
         VStack {
@@ -36,28 +41,93 @@ struct AuthView: View {
                 .foregroundColor(Color.gray)
             
             Spacer()
-
-            Button(action: {
-                authVM.signUpWithGoogle()
-            }) {
+            
+            VStack {
+                Form {
+                    Section(header: Text("Sign in with email").font(.system(.body, design: .rounded))) {
+                        Group {
+                            TextField("Email", text: $enteredEmail)
+                            SecureField("Password", text: $enteredPassword)
+                        }
+                        .listRowBackground((Color.gray).opacity(0.15))
+                    }
+                }
+                .scrollContentBackground(.hidden)
+                .frame(height: 130)
+                
                 HStack {
-                    Image("GoogleLogo")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 30)
-
-                    Text("Sign in with Google")
-                        .font(.system(.title3, design: .rounded))
-                        .fontWeight(.medium)
-                        .kerning(1.2)
+                    Button(action: {
+                        guard !enteredEmail.isEmpty, !enteredPassword.isEmpty else {
+                            errorText = "Please fill all the fields."
+                            showError.toggle()
+                            return
+                        }
+                        
+                        authVM.signInWithEmail(email: enteredEmail, password: enteredPassword)
+                    }) {
+                        Text("Sign in").font(.system(.body, design: .rounded))
+                            .foregroundColor(Color.black).opacity(0.6)
+                    }
+                    .buttonStyle(.bordered)
+                    .padding(.leading, 20)
+                    
+                    Spacer()
+                    
+                    Button(action: {
+                        showSignUpSheet.toggle()
+                    }) {
+                        Text("Don't have an account?")
+                    }
+                    .padding(.trailing, 20)
                 }
             }
-            .frame(height: 50)
-            .padding()
-            .foregroundColor(Color.black)
-            .buttonStyle(.bordered)
+            
+            Text("—— Or continue with ——").font(.system(.body, design: .rounded))
+                .foregroundColor(Color.black).opacity(0.6)
+                .padding(.vertical, 30)
+            
+            HStack {
+                Button(action: {
+                    // Sign in with Apple
+                }) {
+                    HStack {
+                        Image(systemName: "apple.logo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 50)
+                            .foregroundColor(Color.black)
+                    }
+                }
+                .frame(height: 50)
+                .padding()
+                .buttonStyle(.bordered)
+                
+                Button(action: {
+                    authVM.signInWithGoogle()
+                }) {
+                    HStack {
+                        Image("GoogleLogo")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 50)
+                    }
+                }
+                .frame(height: 50)
+                .padding()
+                .buttonStyle(.bordered)
+            }
         }
         .padding()
+        .sheet(isPresented: $showSignUpSheet) {
+            SignUpSheetView()
+        }
+        .onChange(of: authVM.error) {error in
+            errorText = error
+            showError.toggle()
+        }
+        .alert(errorText, isPresented: $showError) {
+            Button("Okay", role: .cancel) { }
+        }
     }
 }
 

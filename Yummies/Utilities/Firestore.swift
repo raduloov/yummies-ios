@@ -17,11 +17,27 @@ class Database: ObservableObject {
         
         // If there is no collection with the current user ID, create one
         userRef.getDocument { document, error in
+            if let error = error {
+                fatalError("Unable to create pinned recipes document: \(error.localizedDescription)")
+            }
+            
+            // Create empty pinned recipes array and date joined
             if !document!.exists {
                 self.db.collection("users").document(userID).setData(["pinnedRecipes":[]])
                 
-                if let error = error {
-                    fatalError("Unable to create pinned recipes document: \(error.localizedDescription)")
+                let date = Date()
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = "dd.MM.yyyy"
+                let dateJoined = dateFormatter.string(from: date)
+                
+                userRef.updateData([
+                    "dateJoined": dateJoined
+                ]) { error in
+                    if let error = error {
+                        print("Error updating document: \(error)")
+                    } else {
+                        print("Document successfully updated")
+                    }
                 }
             }
         }
@@ -87,35 +103,6 @@ class Database: ObservableObject {
         }
     }
     
-    func setDateJoined(userID: String) {
-        
-        let userRef = db.collection("users").document(userID)
-        
-        userRef.getDocument { document, error in
-            if let document = document, document.exists {
-                let dateJoinedField = document.data()!["dateJoined"]
-                
-                if dateJoinedField == nil {
-                    
-                    let date = Date()
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "dd.MM.yyyy"
-                    let dateJoined = dateFormatter.string(from: date)
-                    
-                    userRef.updateData([
-                        "dateJoined": dateJoined
-                    ]) { error in
-                        if let error = error {
-                            print("Error updating document: \(error)")
-                        } else {
-                            print("Document successfully updated")
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
     func getDateJoined(userID: String, completion: @escaping ((String) -> Void)) {
         
         let userRef = db.collection("users").document(userID)
@@ -123,7 +110,7 @@ class Database: ObservableObject {
         userRef.getDocument { document, error in
             if let document = document, document.exists {
                 let dateJoined = document.data()!["dateJoined"] as! String
-                
+
                 completion(dateJoined)
             }
         }

@@ -16,7 +16,7 @@ class AuthViewModel: ObservableObject {
     var handle: AuthStateDidChangeListenerHandle?
     
     @Published var session: User? { didSet { self.didChange.send(self) }}
-    
+    @Published var error: String = ""
     
     func listen () {
         // Monitor authentication changes using firebase
@@ -34,7 +34,31 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func signUpWithGoogle() {
+    func signUpWithEmail(email: String, password: String, fullName: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { result, err in
+            
+            guard let user = result?.user, err == nil else {
+                self.error = err!.localizedDescription
+                return
+            }
+            
+            Database().createUserCollection(userID: user.uid)
+        }
+    }
+    
+    func signInWithEmail(email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { result, err in
+            
+            guard result != nil, err == nil else {
+                self.error = err!.localizedDescription
+                return
+            }
+            
+            Database().createUserCollection(userID: result!.user.uid)
+        }
+    }
+    
+    func signInWithGoogle() {
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
         let config = GIDConfiguration(clientID: clientID)
@@ -61,7 +85,6 @@ class AuthViewModel: ObservableObject {
                 print(user.displayName ?? "Success!!")
                 
                 Database().createUserCollection(userID: user.uid)
-                Database().setDateJoined(userID: user.uid)
             }
         }
     }
@@ -76,11 +99,11 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func unbind () {
-        if let handle = handle {
-            Auth.auth().removeStateDidChangeListener(handle)
-        }
-    }
+//    func unbind() {
+//        if let handle = handle {
+//            Auth.auth().removeStateDidChangeListener(handle)
+//        }
+//    }
 }
 
 class User {
