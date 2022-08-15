@@ -14,8 +14,9 @@ struct SignUpSheetView: View {
     @State private var enteredPassword: String = ""
     @State private var confirmPassword: String = ""
     @State private var enteredFullName: String = ""
-    @State private var showError: Bool = false
-    @State private var errorText: String = ""
+    @State private var showAlert: Bool = false
+    @State private var alertText: String = ""
+    @Binding var showSignUpSheet: Bool
     
     var body: some View {
         VStack {
@@ -26,22 +27,32 @@ struct SignUpSheetView: View {
                         SecureField("Password", text: $enteredPassword)
                         SecureField("Confirm Password", text: $confirmPassword)
                 }
+                .textInputAutocapitalization(TextInputAutocapitalization.never)
+                .autocorrectionDisabled(true)
                 
                 Section {
                         Button(action: {
                             guard !enteredEmail.isEmpty, !enteredPassword.isEmpty, !enteredFullName.isEmpty else {
-                                errorText = "Please fill all the fields."
-                                showError.toggle()
+                                alertText = "Please fill all the fields."
+                                showAlert.toggle()
                                 return
                             }
                             
                             guard enteredPassword == confirmPassword else {
-                                errorText = "Passwords don't match."
-                                showError.toggle()
+                                alertText = "Passwords don't match."
+                                showAlert.toggle()
                                 return
                             }
                             
                             authVM.signUpWithEmail(email: enteredEmail, password: enteredPassword, fullName: enteredFullName)
+                            
+                            
+                            if authVM.error == "" {
+                                alertText = "Account created successfully!"
+                                showAlert.toggle()
+                            }
+                            
+                            
                         }) {
                             Text("Create account").font(.system(.body, design: .rounded))
                                 .foregroundColor(Color.black).opacity(0.6)
@@ -49,18 +60,22 @@ struct SignUpSheetView: View {
                 }
             }
         }
-        .onChange(of: authVM.error) {error in
-            errorText = error
-            showError.toggle()
+        .onChange(of: authVM.error) { error in
+            alertText = error
+            showAlert.toggle()
         }
-        .alert(errorText, isPresented: $showError) {
-            Button("Okay", role: .cancel) { }
+        .alert(alertText, isPresented: $showAlert) {
+            Button("Okay", role: .cancel) {
+                if alertText == "Account created successfully!" {
+                    showSignUpSheet.toggle()
+                }
+            }
         }
     }
 }
 
 struct SignUpSheetView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpSheetView()
+        SignUpSheetView(showSignUpSheet: .constant(true))
     }
 }

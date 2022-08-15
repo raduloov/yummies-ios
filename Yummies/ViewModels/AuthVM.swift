@@ -20,8 +20,8 @@ class AuthViewModel: ObservableObject {
     
     func listen () {
         // Monitor authentication changes using firebase
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            if let user = user {
+        handle = Auth.auth().addStateDidChangeListener { auth, user in
+            if let user = user, user.displayName != nil {
                 self.session = User(
                     uid: user.uid,
                     displayName: user.displayName,
@@ -35,6 +35,8 @@ class AuthViewModel: ObservableObject {
     }
     
     func signUpWithEmail(email: String, password: String, fullName: String) {
+        error = ""
+        
         Auth.auth().createUser(withEmail: email, password: password) { result, err in
             
             guard let user = result?.user, err == nil else {
@@ -43,10 +45,21 @@ class AuthViewModel: ObservableObject {
             }
             
             Database().createUserCollection(userID: user.uid)
+            
+            // Set user's display name
+            let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+            changeRequest?.displayName = fullName
+            changeRequest?.commitChanges { error in
+                if let err = error {
+                    self.error = err.localizedDescription
+                }
+            }
         }
     }
     
     func signInWithEmail(email: String, password: String) {
+        error = ""
+        
         Auth.auth().signIn(withEmail: email, password: password) { result, err in
             
             guard result != nil, err == nil else {
@@ -59,13 +72,15 @@ class AuthViewModel: ObservableObject {
     }
     
     func signInWithGoogle() {
+        error = ""
+        
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
         
         let config = GIDConfiguration(clientID: clientID)
         
         GIDSignIn.sharedInstance.signIn(with: config, presenting: ApplicationUtility.rootViewController) { user, err in
             if let error = err {
-                print(error.localizedDescription)
+                self.error = error.localizedDescription
                 return
             }
             
@@ -76,20 +91,18 @@ class AuthViewModel: ObservableObject {
             
             Auth.auth().signIn(with: credential) { result, err in
                 if let error = err {
-                    print(error.localizedDescription)
+                    self.error = error.localizedDescription
                     return
                 }
                 
                 guard let user = result?.user else { return }
-                
-                print(user.displayName ?? "Success!!")
                 
                 Database().createUserCollection(userID: user.uid)
             }
         }
     }
     
-    func singOut() {
+    func signOut() {
         let firebaseAuth = Auth.auth()
         do {
             try firebaseAuth.signOut()
@@ -98,12 +111,6 @@ class AuthViewModel: ObservableObject {
             print("Error signing out: %@", signOutError)
         }
     }
-    
-//    func unbind() {
-//        if let handle = handle {
-//            Auth.auth().removeStateDidChangeListener(handle)
-//        }
-//    }
 }
 
 class User {

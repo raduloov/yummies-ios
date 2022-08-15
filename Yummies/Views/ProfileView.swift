@@ -57,7 +57,7 @@ struct ProfileView: View {
                 Spacer()
                 
                 Button(action: {
-                    authVM.singOut()
+                    authVM.signOut()
                 }) {
                     HStack {
                         Image(systemName: "rectangle.portrait.and.arrow.forward")

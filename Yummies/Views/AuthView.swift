@@ -13,9 +13,9 @@ struct AuthView: View {
     @EnvironmentObject private var authVM: AuthViewModel
     @State private var enteredEmail: String = ""
     @State private var enteredPassword: String = ""
-    @State private var showSignUpSheet: Bool = false
     @State private var showError: Bool = false
     @State private var errorText: String = ""
+    @State var showSignUpSheet: Bool = false
     
     var body: some View {
         VStack {
@@ -50,6 +50,8 @@ struct AuthView: View {
                             SecureField("Password", text: $enteredPassword)
                         }
                         .listRowBackground((Color.gray).opacity(0.15))
+                        .textInputAutocapitalization(TextInputAutocapitalization.never)
+                        .autocorrectionDisabled(true)
                     }
                 }
                 .scrollContentBackground(.hidden)
@@ -119,7 +121,7 @@ struct AuthView: View {
         }
         .padding()
         .sheet(isPresented: $showSignUpSheet) {
-            SignUpSheetView()
+            SignUpSheetView(showSignUpSheet: $showSignUpSheet)
         }
         .onChange(of: authVM.error) {error in
             errorText = error
