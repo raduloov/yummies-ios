@@ -15,12 +15,12 @@ Yummies is my first attempt at building a native iOS app using Swift and SwiftUI
 ![Sign in / Sign up](https://media.giphy.com/media/Ig1aTddmQbkAJuWUyJ/giphy.gif) ![Featured + Search](https://media.giphy.com/media/En3Aa7HC6IDtoTTyvY/giphy.gif) ![Categories](https://media.giphy.com/media/OLSEewYaHbpQUhi20O/giphy.gif) ![Details](https://media.giphy.com/media/WvmbOV9NK1Dx055qNH/giphy.gif) ![Pinning](https://media.giphy.com/media/uqJjpKWM6NNyavmL9y/giphy.gif) ![Profile](https://media.giphy.com/media/TIqe9Go8PgIsVssAwh/giphy.gif)
 
 ## Usage
-If you would like to try this app out for yourself, follow these steps:
-
 _Prerequisites:_
  - _MacOS_
  - _Xcode 14 beta+_
  - _iOS 16.0+ device or simulator_
+ 
+If you would like to try this app out for yourself, follow these steps:
 
 Steps
  - Clone the repo to your local machine
