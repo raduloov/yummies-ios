@@ -1,6 +1,6 @@
 # Yummies - iOS
 
-![Yummies Logo](https://postimg.cc/9rrpffv7)
+![Yummies Logo](https://i.postimg.cc/8PbntJ4t/Screenshot-2022-08-17-at-0-26-03.png)
 
 ## About
 
