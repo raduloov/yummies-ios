@@ -1,6 +1,6 @@
 # Yummies - iOS
 
-![Yummies Logo](https://imgur.com/a/qoAHuUF)
+![Yummies Logo](https://postimg.cc/9rrpffv7)
 
 ## About
 
