@@ -1,5 +1,7 @@
 # Yummies - iOS
 
+[Yummies Logo](https://imgur.com/a/qoAHuUF)
+
 ## About
 
 Yummies is my first attempt at building a native iOS app using Swift and SwiftUI. A recipe browser where you can pin your favorite ones. Powered by [Edamam Recipe Search API](https://developer.edamam.com/edamam-docs-recipe-api).
