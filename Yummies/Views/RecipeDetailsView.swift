@@ -23,7 +23,7 @@ struct RecipeDetailsView: View {
     var body: some View {
         
         ZStack {
-            Color("bgGradient1")
+            Color.background
                 .edgesIgnoringSafeArea(.all)
             
             ScrollView {

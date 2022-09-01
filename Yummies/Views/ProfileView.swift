@@ -16,7 +16,7 @@ struct ProfileView: View {
     
     var body: some View {
         ZStack {
-            Color("bgGradient1")
+            Color.background
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
@@ -72,11 +72,11 @@ struct ProfileView: View {
             }
         }
         .onAppear {
-            Database().getDateJoined(userID: authVM.session!.uid) { date in
+            Database.shared.getDateJoined(userID: authVM.session!.uid) { date in
                 dateJoined = date
             }
             
-            Database().getPinnedRecipes(userID: authVM.session!.uid) { recipes in
+            Database.shared.getPinnedRecipes(userID: authVM.session!.uid) { recipes in
                 pinnedRecipesCount = recipes.count
             }
         }

@@ -47,11 +47,11 @@ struct NavigationBar: View {
                     guard let uid = userID else { return }
                     
                     if !isPinned {
-                        Database().pinRecipe(userID: uid, recipeID: recipeID!)
+                        Database.shared.pinRecipe(userID: uid, recipeID: recipeID!)
                         alertText = "Recipe pinned! 📌"
                         hapticFeedback.trigger(intensity: .rigid)
                     } else {
-                        Database().unpinRecipe(userID: uid, recipeID: recipeID!)
+                        Database.shared.unpinRecipe(userID: uid, recipeID: recipeID!)
                         alertText = "Recipe unpinned! 💔"
                         hapticFeedback.trigger(intensity: .medium)
                     }
@@ -77,7 +77,7 @@ struct NavigationBar: View {
         .padding()
         .onAppear {
             if let userID = userID, let recipeID = recipeID {
-                Database().checkIsPinned(userID: userID, recipeID: recipeID) { recipeIsPinned in
+                Database.shared.checkIsPinned(userID: userID, recipeID: recipeID) { recipeIsPinned in
                     isPinned = recipeIsPinned
                 }
             }

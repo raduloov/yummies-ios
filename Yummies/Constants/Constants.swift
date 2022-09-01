@@ -5,8 +5,8 @@
 //  Created by Yavor Radulov on 24.07.22.
 //
 
-import Foundation
 import UIKit
+import SwiftUI
 
 struct K {
     static let BASE_URL = "https://api.edamam.com/api/recipes/v2"
@@ -25,5 +25,11 @@ struct K {
             return URL(string: "\(K.BASE_URL)/\(id)?type=public&app_id=\(K.APP_ID)&app_key=\(K.API_KEY)")!
         }
         
+    }
+}
+
+extension Color {
+    static var background: Color {
+        Color("background")
     }
 }

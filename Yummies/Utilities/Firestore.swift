@@ -10,7 +10,11 @@ import Firebase
 
 class Database: ObservableObject {
     
+    static let shared = Database()
+    
     let db = Firestore.firestore()
+    
+    private init() {}
     
     func createUserCollection(userID: String) {
         let userRef = db.collection("users").document(userID)
@@ -22,22 +26,22 @@ class Database: ObservableObject {
             }
             
             // Create empty pinned recipes array and date joined
-            if !document!.exists {
-                self.db.collection("users").document(userID).setData(["pinnedRecipes":[]])
-                
-                let date = Date()
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = "dd.MM.yyyy"
-                let dateJoined = dateFormatter.string(from: date)
-                
-                userRef.updateData([
-                    "dateJoined": dateJoined
-                ]) { error in
-                    if let error = error {
-                        print("Error updating document: \(error)")
-                    } else {
-                        print("Document successfully updated")
-                    }
+            guard !document!.exists else { return }
+            
+            self.db.collection("users").document(userID).setData(["pinnedRecipes":[]])
+            
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yyyy"
+            let dateJoined = dateFormatter.string(from: date)
+            
+            userRef.updateData([
+                "dateJoined": dateJoined
+            ]) { error in
+                if let error = error {
+                    print("Error updating document: \(error)")
+                } else {
+                    print("Document successfully updated")
                 }
             }
         }
@@ -80,13 +84,15 @@ class Database: ObservableObject {
         let userRef = db.collection("users").document(userID)
         
         userRef.getDocument { document, error in
-            if let document = document, document.exists {
-                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
-                
-                recipeIsPinned = pinnedRecipes.contains(where: { $0 == recipeID })
-                
-                completion(recipeIsPinned)
-            }
+            
+            guard let document = document, document.exists else { return }
+            guard let data = document.data() else { return }
+            
+            let pinnedRecipes = data["pinnedRecipes"] as! [String]
+            
+            recipeIsPinned = pinnedRecipes.contains(where: { $0 == recipeID })
+            
+            completion(recipeIsPinned)
         }
     }
     
@@ -95,11 +101,14 @@ class Database: ObservableObject {
         let userRef = db.collection("users").document(userID)
         
         userRef.getDocument { document, error in
-            if let document = document, document.exists {
-                let pinnedRecipes = document.data()!["pinnedRecipes"] as! [String]
-                
-                completion(pinnedRecipes)
-            }
+            
+            guard let document = document, document.exists else { return }
+            guard let data = document.data() else { return }
+            
+            let pinnedRecipes = data["pinnedRecipes"] as! [String]
+            
+            completion(pinnedRecipes)
+            
         }
     }
     
@@ -108,11 +117,14 @@ class Database: ObservableObject {
         let userRef = db.collection("users").document(userID)
         
         userRef.getDocument { document, error in
-            if let document = document, document.exists {
-                let dateJoined = document.data()!["dateJoined"] as! String
-
-                completion(dateJoined)
-            }
+            
+            guard let document = document, document.exists else { return }
+            guard let data = document.data() else { return }
+            
+            let dateJoined = data["dateJoined"] as! String
+            
+            completion(dateJoined)
+            
         }
     }
 }

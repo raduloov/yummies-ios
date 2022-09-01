@@ -68,7 +68,7 @@ class HomeViewModel: ObservableObject {
     }
     
     func getPinnedRecipeIDs(userID: String) {
-        Database().getPinnedRecipes(userID: userID) { recipes in
+        Database.shared.getPinnedRecipes(userID: userID) { recipes in
             self.pinnedRecipeIDs = recipes
         }
     }

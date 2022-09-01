@@ -44,7 +44,7 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            Database().createUserCollection(userID: user.uid)
+            Database.shared.createUserCollection(userID: user.uid)
             
             // Set user's display name
             let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
@@ -67,7 +67,7 @@ class AuthViewModel: ObservableObject {
                 return
             }
             
-            Database().createUserCollection(userID: result!.user.uid)
+            Database.shared.createUserCollection(userID: result!.user.uid)
         }
     }
     
@@ -97,7 +97,7 @@ class AuthViewModel: ObservableObject {
                 
                 guard let user = result?.user else { return }
                 
-                Database().createUserCollection(userID: user.uid)
+                Database.shared.createUserCollection(userID: user.uid)
             }
         }
     }

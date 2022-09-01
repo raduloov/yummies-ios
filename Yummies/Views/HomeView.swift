@@ -14,7 +14,7 @@ struct HomeScreenView: View {
     
     @EnvironmentObject private var authVM: AuthViewModel
     @StateObject private var homeVM = HomeViewModel()
-    @StateObject private var database = Database()
+//    @StateObject private var database = Database()
     @State var showCategories: Bool = false
     @State var currentCategoryType: CategoryType = CategoryType.featured
     @State var currentCategoryData: Category = Category(emoji: "⭐️", title: "Featured")
@@ -22,7 +22,7 @@ struct HomeScreenView: View {
     
     var body: some View {
         ZStack {
-            Color("bgGradient1")
+            Color.background
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
