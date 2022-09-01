@@ -26,6 +26,7 @@
 		DB249A07288ED32800B35BDE /* NutrientStickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB249A06288ED32800B35BDE /* NutrientStickers.swift */; };
 		DB3EFFFD28A6F8300005F369 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB3EFFFC28A6F8300005F369 /* WebView.swift */; };
 		DB6272A328A8F3E700135D78 /* SignUpSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB6272A228A8F3E700135D78 /* SignUpSheetView.swift */; };
+		DB7F160028C089B300F328F7 /* ProfileVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB7F15FF28C089B300F328F7 /* ProfileVM.swift */; };
 		DB9198D4288AB21C00E66A64 /* YummiesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9198D3288AB21C00E66A64 /* YummiesApp.swift */; };
 		DB9198D6288AB21C00E66A64 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB9198D5288AB21C00E66A64 /* ContentView.swift */; };
 		DB9198D8288AB21F00E66A64 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DB9198D7288AB21F00E66A64 /* Assets.xcassets */; };
@@ -70,6 +71,7 @@
 		DB249A06288ED32800B35BDE /* NutrientStickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NutrientStickers.swift; sourceTree = "<group>"; };
 		DB3EFFFC28A6F8300005F369 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		DB6272A228A8F3E700135D78 /* SignUpSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpSheetView.swift; sourceTree = "<group>"; };
+		DB7F15FF28C089B300F328F7 /* ProfileVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVM.swift; sourceTree = "<group>"; };
 		DB9198D0288AB21C00E66A64 /* Yummies.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yummies.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DB9198D3288AB21C00E66A64 /* YummiesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YummiesApp.swift; sourceTree = "<group>"; };
 		DB9198D5288AB21C00E66A64 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -221,6 +223,7 @@
 				DB2499E0288BEDC700B35BDE /* AuthVM.swift */,
 				DB2499F2288C730F00B35BDE /* HomeVM.swift */,
 				DBC23F8D28914CCB0057CD20 /* RecipeDetailsVM.swift */,
+				DB7F15FF28C089B300F328F7 /* ProfileVM.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 				DB2499E6288BFA7900B35BDE /* AuthView.swift in Sources */,
 				DB2499FF288D76A700B35BDE /* ProfileView.swift in Sources */,
 				DB2499FD288D6FD200B35BDE /* Categories.swift in Sources */,
+				DB7F160028C089B300F328F7 /* ProfileVM.swift in Sources */,
 				DBC23F90289175630057CD20 /* NutrientListSheetView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,8 +11,7 @@ struct ProfileView: View {
     
     @Environment(\.dismiss) private var dismiss
     @EnvironmentObject var authVM: AuthViewModel
-    @State private var dateJoined: String = ""
-    @State private var pinnedRecipesCount: Int = 0
+    @StateObject private var profileVM = ProfileViewModel()
     
     var body: some View {
         ZStack {
@@ -48,8 +47,8 @@ struct ProfileView: View {
                     Section(header: Text("Profile info")) {
                         ProfileInfoRow(firstItem: "Full name:", secondItem: authVM.session?.displayName ?? "No Name")
                         ProfileInfoRow(firstItem: "Email:", secondItem: authVM.session?.email ?? "No Email")
-                        ProfileInfoRow(firstItem: "Date joined:", secondItem: dateJoined)
-                        ProfileInfoRow(firstItem: "Recipes pinned:", secondItem: String(pinnedRecipesCount))
+                        ProfileInfoRow(firstItem: "Date joined:", secondItem: profileVM.dateJoined)
+                        ProfileInfoRow(firstItem: "Recipes pinned:", secondItem: String(profileVM.pinnedRecipesCount))
                     }
                 }
                 .scrollContentBackground(.hidden)
@@ -72,13 +71,8 @@ struct ProfileView: View {
             }
         }
         .onAppear {
-            Database.shared.getDateJoined(userID: authVM.session!.uid) { date in
-                dateJoined = date
-            }
-            
-            Database.shared.getPinnedRecipes(userID: authVM.session!.uid) { recipes in
-                pinnedRecipesCount = recipes.count
-            }
+            profileVM.setDateJoined(userID: authVM.session!.uid)
+            profileVM.setPinnedRecipesCount(userID: authVM.session!.uid)
         }
     }
 }
