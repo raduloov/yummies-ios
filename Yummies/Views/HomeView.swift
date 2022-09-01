@@ -10,6 +10,8 @@ import FirebaseAuth
 
 struct HomeScreenView: View {
     
+    let config = Config()
+    
     @EnvironmentObject private var authVM: AuthViewModel
     @StateObject private var homeVM = HomeViewModel()
     @StateObject private var database = Database()
@@ -56,7 +58,7 @@ struct HomeScreenView: View {
                                     await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
                                 }
                             }
-                        } else if homeVM.pinnedRecipes.count < homeVM.pinnedRecipeIDs.count {
+                        } else if homeVM.recipesDidLoad(category: .pinned) {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -77,17 +79,17 @@ struct HomeScreenView: View {
                     }
                     
                     if currentCategoryType == .featured {
-                        if homeVM.featuredRecipes.count < featured.count {
+                        if !homeVM.recipesDidLoad(category: .featured) {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
                             .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
                         } else {
                             VStack {
-                                ForEach(0 ..< featured.count, id: \.self) { index in
+                                ForEach(0 ..< config.featured.count, id: \.self) { index in
                                     Group {
                                         HStack {
-                                            Text(featured[index].title)
+                                            Text(config.featured[index].title)
                                                 .font(.system(.title, design: .rounded))
                                                 .fontWeight(.heavy)
                                                 .padding(.horizontal)
@@ -119,7 +121,7 @@ struct HomeScreenView: View {
                                     await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
                                 }
                             }
-                        } else if !homeVM.recipesLoaded {
+                        } else if !homeVM.recipesDidLoad(category: .specific) {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -146,7 +148,7 @@ struct HomeScreenView: View {
                                     await homeVM.refreshRecipes(currentCategoryData: currentCategoryData)
                                 }
                             }
-                        } else if !homeVM.recipesLoaded {
+                        } else if !homeVM.recipesDidLoad(category: .search) {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
@@ -184,7 +186,7 @@ struct HomeScreenView: View {
             .environmentObject(homeVM)
         }
         .task {
-            if currentCategoryType == .featured && homeVM.featuredRecipes.count < categories.count {
+            if currentCategoryType == .featured && homeVM.featuredRecipes.count < config.categories.count {
                 await homeVM.populateFeaturedCategories()
             } else if currentCategoryType == .pinned {
                 homeVM.getPinnedRecipeIDs(userID: authVM.session!.uid)

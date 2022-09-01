@@ -10,6 +10,7 @@ import SwiftUI
 struct CategoriesSheetView: View {
     
     var userID: String
+    let config = Config()
     
     @Binding var categoryData: Category
     @Binding var currentCategory: CategoryType
@@ -36,25 +37,25 @@ struct CategoriesSheetView: View {
                 }
                 
                 Section(header: Text("Featured").font(.system(.title2))) {
-                    ForEach(0 ..< featuredCategories.count, id: \.self) { index in
+                    ForEach(0 ..< config.featuredCategories.count, id: \.self) { index in
                         FormRowView(
                             categoryData: $categoryData,
                             currentCategory: $currentCategory,
-                            emoji: featuredCategories[index].emoji,
-                            title: featuredCategories[index].title,
-                            query: featuredCategories[index].query!
+                            emoji: config.featuredCategories[index].emoji,
+                            title: config.featuredCategories[index].title,
+                            query: config.featuredCategories[index].query!
                         )
                     }
                 }
                 
                 Section(header: Text("Other Categories").font(.system(.title2))) {
-                    ForEach(0 ..< categories.count, id: \.self) { index in
+                    ForEach(0 ..< config.categories.count, id: \.self) { index in
                         FormRowView(
                             categoryData: $categoryData,
                             currentCategory: $currentCategory,
-                            emoji: categories[index].emoji,
-                            title: categories[index].title,
-                            query: categories[index].query!
+                            emoji: config.categories[index].emoji,
+                            title: config.categories[index].title,
+                            query: config.categories[index].query!
                         )
                     }
                 }

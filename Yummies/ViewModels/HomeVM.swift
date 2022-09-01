@@ -10,6 +10,8 @@ import Combine
 
 class HomeViewModel: ObservableObject {
     
+    let config = Config()
+    
     @Published var featuredRecipes: [[Result]] = []
     @Published var fetchedRecipes: [Result] = []
     @Published var pinnedRecipes: [Result] = []
@@ -23,7 +25,7 @@ class HomeViewModel: ObservableObject {
             self.fetchingError = false
         }
         
-        for category in featured {
+        for category in config.featured {
             do {
                 let recipesResponse = try await RecipeService().get(url: K.URLs.recipesByName(category.query)) { data in
                     return try? JSONDecoder().decode(Recipes.self, from: data)
@@ -68,7 +70,6 @@ class HomeViewModel: ObservableObject {
     func getPinnedRecipeIDs(userID: String) {
         Database().getPinnedRecipes(userID: userID) { recipes in
             self.pinnedRecipeIDs = recipes
-            print(self.pinnedRecipeIDs)
         }
     }
     
@@ -103,6 +104,23 @@ class HomeViewModel: ObservableObject {
             await populateFeaturedCategories()
         }
     }
+    
+    // Conditional rendering
+    func recipesDidLoad(category: CategoryType) -> Bool {
+        
+        switch category {
+        case .specific:
+            return recipesLoaded
+        case .search:
+            return recipesLoaded
+        case .featured:
+            return featuredRecipes.count >= config.featured.count
+        case .pinned:
+            return pinnedRecipes.count >= pinnedRecipeIDs.count
+        }
+    }
+    
+    
 }
 
 
