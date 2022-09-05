@@ -18,6 +18,7 @@ struct YummiesApp: App {
                 NavigationView {
                     ContentView()
                         .environmentObject(AuthViewModel())
+                        .environmentObject(MealCardViewModel())
                 }
         }
     }

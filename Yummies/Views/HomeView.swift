@@ -13,8 +13,8 @@ struct HomeScreenView: View {
     let config = Config()
     
     @EnvironmentObject private var authVM: AuthViewModel
+    @EnvironmentObject private var mealCardVM: MealCardViewModel
     @StateObject private var homeVM = HomeViewModel()
-//    @StateObject private var database = Database()
     @State var showCategories: Bool = false
     @State var currentCategoryType: CategoryType = CategoryType.featured
     @State var currentCategoryData: Category = Category(emoji: "⭐️", title: "Featured")
@@ -62,7 +62,7 @@ struct HomeScreenView: View {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
-                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                            .frame(width: Constants.SCREEN_WIDTH, height: Constants.SCREEN_HEIGHT / 2)
                         } else {
                             VStack {
                                 ForEach(homeVM.pinnedRecipes) { recipe in
@@ -83,7 +83,7 @@ struct HomeScreenView: View {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
-                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                            .frame(width: Constants.SCREEN_WIDTH, height: Constants.SCREEN_HEIGHT / 2)
                         } else {
                             VStack {
                                 ForEach(0 ..< config.featured.count, id: \.self) { index in
@@ -105,6 +105,7 @@ struct HomeScreenView: View {
                                                         nutrients: recipe.recipe.totalNutrients,
                                                         userID: authVM.session?.uid ?? ""
                                                     )
+                                                    .environmentObject(mealCardVM)
                                                 }
                                             }
                                         }
@@ -125,7 +126,7 @@ struct HomeScreenView: View {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
-                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                            .frame(width: Constants.SCREEN_WIDTH, height: Constants.SCREEN_HEIGHT / 2)
                         } else {
                             VStack {
                                 ForEach(homeVM.fetchedRecipes) { recipe in
@@ -152,7 +153,7 @@ struct HomeScreenView: View {
                             VStack {
                                 LoadingIndicator(text: "Getting recipes...", size: 2)
                             }
-                            .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                            .frame(width: Constants.SCREEN_WIDTH, height: Constants.SCREEN_HEIGHT / 2)
                         } else if homeVM.fetchedRecipes.count == 0 {
                             NoRecipesFoundCard(searchTerm: searchTerm)
                         } else {
@@ -196,7 +197,7 @@ struct HomeScreenView: View {
         }
         .onChange(of: homeVM.pinnedRecipeIDs) { _ in
             Task {
-                await homeVM.populatePinnedRecipes(recipes: homeVM.pinnedRecipeIDs)
+                await homeVM.populatePinnedRecipes(homeVM.pinnedRecipeIDs)
             }
         }
         .onChange(of: currentCategoryData.title) { _ in

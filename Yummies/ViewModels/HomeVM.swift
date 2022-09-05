@@ -12,9 +12,9 @@ class HomeViewModel: ObservableObject {
     
     let config = Config()
     
-    @Published var featuredRecipes: [[Result]] = []
-    @Published var fetchedRecipes: [Result] = []
-    @Published var pinnedRecipes: [Result] = []
+    @Published var featuredRecipes: [[ResultDTO]] = []
+    @Published var fetchedRecipes: [ResultDTO] = []
+    @Published var pinnedRecipes: [ResultDTO] = []
     @Published var pinnedRecipeIDs: [String] = []
     @Published var recipesLoaded: Bool = false
     @Published var fetchingError: Bool = false
@@ -27,8 +27,8 @@ class HomeViewModel: ObservableObject {
         
         for category in config.featured {
             do {
-                let recipesResponse = try await RecipeService().get(url: K.URLs.recipesByName(category.query)) { data in
-                    return try? JSONDecoder().decode(Recipes.self, from: data)
+                let recipesResponse = try await RecipeService().get(url: Constants.URLs.recipesByName(category.query)) { data in
+                    return try? JSONDecoder().decode(RecipesDTO.self, from: data)
                 }
 
                 DispatchQueue.main.async {
@@ -51,8 +51,8 @@ class HomeViewModel: ObservableObject {
         }
         
         do {
-            let recipesResponse = try await RecipeService().get(url: K.URLs.recipesByName(query)) { data in
-                return try? JSONDecoder().decode(Recipes.self, from: data)
+            let recipesResponse = try await RecipeService().get(url: Constants.URLs.recipesByName(query)) { data in
+                return try? JSONDecoder().decode(RecipesDTO.self, from: data)
             }
 
             DispatchQueue.main.async {
@@ -73,7 +73,7 @@ class HomeViewModel: ObservableObject {
         }
     }
     
-    func populatePinnedRecipes(recipes: [String]) async {
+    func populatePinnedRecipes(_ recipes: [String]) async {
         DispatchQueue.main.async {
             self.fetchingError = false
             self.pinnedRecipes = []
@@ -81,8 +81,8 @@ class HomeViewModel: ObservableObject {
         
         for recipeID in recipes {
             do {
-                let recipeResponse = try await RecipeService().get(url: K.URLs.recipeById(recipeID)) { data in
-                    return try? JSONDecoder().decode(Result.self, from: data)
+                let recipeResponse = try await RecipeService().get(url: Constants.URLs.recipeById(recipeID)) { data in
+                    return try? JSONDecoder().decode(ResultDTO.self, from: data)
                 }
 
                 DispatchQueue.main.async {

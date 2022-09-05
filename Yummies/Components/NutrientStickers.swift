@@ -47,20 +47,20 @@ struct NutrientStickersRowLarge: View {
 
 struct NutrientSticker: View {
     
-    let color: String
+    let color: Color
     let label: String
-    let quantity: String
+    let quantity: Int
     let units: String
     
     var body: some View {
         ZStack {
             Circle()
-                .fill(Color(color))
+                .fill(color)
                 .overlay(
                     Circle()
                         .stroke(Color.white, style: StrokeStyle(lineWidth: 3, dash: [2]))
                 )
-                Text("\(label)\n\(quantity)\(units == "g" ? "g" : "")")
+                Text("\(label)\n\(String(quantity))\(units == "g" ? "g" : "")")
                     .foregroundColor(Color.black)
                     .font(.system(.footnote, design: .rounded))
         }
@@ -70,15 +70,15 @@ struct NutrientSticker: View {
 
 struct NutrientStickerLarge: View {
     
-    let color: String
+    let color: Color
     let label: String
-    let quantity: String
+    let quantity: Int
     let units: String
     
     var body: some View {
         ZStack {
             RoundedRectangle(cornerRadius: 35)
-                .fill(Color(color).gradient)
+                .fill(color.gradient)
                 .frame(height: 70)
                 .overlay {
                     RoundedRectangle(cornerRadius: 35)
@@ -88,7 +88,7 @@ struct NutrientStickerLarge: View {
                             .fill(Color.white.opacity(0.7))
                             .padding(7)
                             .overlay {
-                                Text(quantity)
+                                Text(String(quantity))
                                     .fontWeight(.medium)
                             }
                         VStack(alignment: .leading) {
@@ -107,9 +107,9 @@ struct NutrientStickerLarge: View {
 }
 
 struct Nutrient {
-    let color: String
+    let color: Color
     let label: String
-    let quantity: String
+    let quantity: Int
     let units: String
 }
 

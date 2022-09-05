@@ -12,13 +12,15 @@ struct HorizontalMealCard: View {
     let uri: String
     let imageUrl: String
     let label: String
-    let nutrients: TotalNutrients
+    let nutrients: TotalNutrientsDTO
     let userID: String
+    
+    @EnvironmentObject private var mealCardVM: MealCardViewModel
     
     var body: some View {
         NavigationLink {
-            // Extract recipe ID from URI
-            let recipeID = String(self.uri.suffix(32))
+            let recipeID = mealCardVM.getRecipeID(from: uri)
+            
             RecipeDetailsView(recipeID: recipeID, userID: userID)
                 .toolbar(.hidden)
         } label: {
@@ -53,9 +55,9 @@ struct HorizontalMealCard: View {
                 .shadow(radius: 5, x: 0, y: 5)
                 
                 NutrientStickers(nutrients: [
-                    Nutrient(color: "kcalSticker", label: "KCal", quantity: String(Int(nutrients.kcals.quantity)), units: "kcal"),
-                    Nutrient(color: "proteinSticker", label: "Protein", quantity: String(Int(nutrients.protein.quantity)), units: "g"),
-                    Nutrient(color: "sugarSticker", label: "Sugars", quantity: String(Int(nutrients.sugars.quantity)), units: "g")
+                    Nutrient(color: Color("kcalSticker"), label: "KCal", quantity: Int(nutrients.kcals.quantity), units: "kcal"),
+                    Nutrient(color: Color("proteinSticker"), label: "Protein", quantity: Int(nutrients.protein.quantity), units: "g"),
+                    Nutrient(color: Color("sugarSticker"), label: "Sugars", quantity: Int(nutrients.sugars.quantity), units: "g")
                 ])
             }
         }

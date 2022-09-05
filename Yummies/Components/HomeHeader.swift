@@ -64,7 +64,7 @@ struct HomeHeader: View {
                 .frame(width: 35, height: 35)
             })
         }
-        .frame(width: K.SCREEN_WIDTH - 30, height: 40)
+        .frame(width: Constants.SCREEN_WIDTH - 30, height: 40)
         .padding(.vertical)
     }
 }

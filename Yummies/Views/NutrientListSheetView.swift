@@ -9,7 +9,7 @@ import SwiftUI
 
 struct NutrientListSheetView: View {
     
-    let nutrients: TotalNutrients
+    let nutrients: TotalNutrientsDTO
     
     var body: some View {
         List {

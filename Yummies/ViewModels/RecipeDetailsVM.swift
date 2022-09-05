@@ -9,7 +9,7 @@ import SwiftUI
 
 class RecipeDetailViewModel: ObservableObject {
     
-    @Published var recipeData: Result?
+    @Published var recipeData: ResultDTO?
     @Published var recipeLoaded: Bool = false
     @Published var fetchingError: Bool = false
     
@@ -21,8 +21,8 @@ class RecipeDetailViewModel: ObservableObject {
         }
         
         do {
-            let recipeResponse = try await RecipeService().get(url: K.URLs.recipeById(recipeID)) { data in
-                return try? JSONDecoder().decode(Result.self, from: data)
+            let recipeResponse = try await RecipeService().get(url: Constants.URLs.recipeById(recipeID)) { data in
+                return try? JSONDecoder().decode(ResultDTO.self, from: data)
             }
 
             DispatchQueue.main.async {

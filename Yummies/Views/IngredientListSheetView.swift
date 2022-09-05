@@ -9,7 +9,7 @@ import SwiftUI
 
 struct IngredientListSheetView: View {
     
-    let ingredients: [Ingredient]
+    let ingredients: [IngredientDTO]
     
     var body: some View {
             List {

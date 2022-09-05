@@ -15,7 +15,11 @@ class AuthViewModel: ObservableObject {
     var didChange = PassthroughSubject<AuthViewModel, Never>()
     var handle: AuthStateDidChangeListenerHandle?
     
-    @Published var session: User? { didSet { self.didChange.send(self) }}
+    @Published var session: User? {
+        didSet {
+            self.didChange.send(self)
+        }
+    }
     @Published var error: String = ""
     
     func listen () {

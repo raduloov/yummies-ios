@@ -39,7 +39,7 @@ struct RecipeDetailsView: View {
                     VStack {
                         LoadingIndicator(text: "Getting recipe info...", size: 2)
                     }
-                    .frame(width: K.SCREEN_WIDTH, height: K.SCREEN_HEIGHT / 2)
+                    .frame(width: Constants.SCREEN_WIDTH, height: Constants.SCREEN_HEIGHT / 2)
                 } else if let recipeData = recipeDetailsVM.recipeData?.recipe {
                     AsyncImage(url: URL(string: recipeData.image)) { image in
                         ZStack {
@@ -85,16 +85,16 @@ struct RecipeDetailsView: View {
                             
                             VStack {
                                 NutrientStickersRowLarge(nutrients: [
-                                    Nutrient(color: "kcalSticker", label: "KCal", quantity: String(Int(recipeData.totalNutrients.kcals.quantity)), units: "kcal"),
-                                    Nutrient(color: "proteinSticker", label: "Protein", quantity: String(Int(recipeData.totalNutrients.protein.quantity)), units: "g")
+                                    Nutrient(color: Color("kcalSticker"), label: "KCal", quantity: Int(recipeData.totalNutrients.kcals.quantity), units: "kcal"),
+                                    Nutrient(color: Color("proteinSticker"), label: "Protein", quantity: Int(recipeData.totalNutrients.protein.quantity), units: "g")
                                 ])
                                 NutrientStickersRowLarge(nutrients: [
-                                    Nutrient(color: "carbsSticker", label: "Carbs", quantity: String(Int(recipeData.totalNutrients.carbs.quantity)), units: "g"),
-                                    Nutrient(color: "sugarSticker", label: "Sugars", quantity: String(Int(recipeData.totalNutrients.sugars.quantity)), units: "g")
+                                    Nutrient(color: Color("carbsSticker"), label: "Carbs", quantity: Int(recipeData.totalNutrients.carbs.quantity), units: "g"),
+                                    Nutrient(color: Color("sugarSticker"), label: "Sugars", quantity: Int(recipeData.totalNutrients.sugars.quantity), units: "g")
                                 ])
                                 NutrientStickersRowLarge(nutrients: [
-                                    Nutrient(color: "satFatSticker", label: "Sat. Fat", quantity: String(Int(recipeData.totalNutrients.satFat.quantity)), units: "g"),
-                                    Nutrient(color: "fiberSticker", label: "Fiber", quantity: String(Int(recipeData.totalNutrients.fiber.quantity)), units: "g")
+                                    Nutrient(color: Color("satFatSticker"), label: "Sat. Fat", quantity: Int(recipeData.totalNutrients.satFat.quantity), units: "g"),
+                                    Nutrient(color: Color("fiberSticker"), label: "Fiber", quantity: Int(recipeData.totalNutrients.fiber.quantity), units: "g")
                                 ])
                             }
                         }
